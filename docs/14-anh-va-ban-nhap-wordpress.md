@@ -209,6 +209,23 @@ diện là dòng `hero` của manifest; rồi in đường dẫn mở bản nhá
 Lần chạy sau trên cùng thư mục sẽ **cập nhật đúng bản nháp cũ**, vì `work/<slug>/.wp.json` giữ
 `post_id`. Xóa file đó đi thì lần sau tạo bản nháp mới, nên đừng xóa nếu không cố ý.
 
+### B4b. Trường Rank Math
+
+Blog dùng Rank Math, và Rank Math chấm mục **SEO cơ bản** dựa trên ô **từ khoá chính** của nó. Trước
+25/09/2026 `wp_draft.py` chỉ ghi tiêu đề bài, nội dung và đoạn trích, nên ô đó để trống và cả 5 mục SEO
+cơ bản đều báo lỗi trên bản nháp bài 002 — dù bài có đủ Title, meta và truy vấn chính.
+
+Nay sau khi tạo hoặc cập nhật bản nháp, script gọi `POST /wp-json/rankmath/v1/updateMeta` để ghi:
+
+| Trường Rank Math | Lấy từ front matter |
+|---|---|
+| `rank_math_focus_keyword` | `primary_query` |
+| `rank_math_title` | `title` |
+| `rank_math_description` | `meta_description` |
+
+Ghi lỗi thì script **không dừng**: bản nháp đã nằm trên WordPress, nó in cảnh báo để người đăng bài
+điền tay ba ô đó.
+
 ### B5. Bốn việc người đăng bài vẫn phải làm
 
 Markdown không diễn đạt được, `qa-report.md` mục "Ghi chú cho người đăng bài" đã liệt kê (quy tắc 18):

@@ -437,6 +437,43 @@ def upload_images(folder: str, rows: list[dict], auth: str,
     return media
 
 
+def rank_math_meta(fm: dict) -> dict:
+    """Ba truong Rank Math cham muc "SEO co ban": tu khoa chinh, tieu de SEO, meta.
+
+    Truoc day script chi ghi tieu de bai, noi dung va excerpt. O tu khoa chinh cua Rank
+    Math de trong nen ca 5 muc "SEO co ban" deu bao loi tren ban nhap bai 002, du bai
+    co du Title, meta va truy van chinh trong front matter.
+    """
+    meta = {}
+    kw = str(fm.get("primary_query") or "").strip()
+    if kw:
+        meta["rank_math_focus_keyword"] = kw
+    title = str(fm.get("title") or "").strip()
+    if title:
+        meta["rank_math_title"] = title
+    desc = str(fm.get("meta_description") or "").strip()
+    if desc:
+        meta["rank_math_description"] = desc
+    return meta
+
+
+def set_rank_math(post_id: int, fm: dict, auth: str) -> list[str]:
+    """Ghi truong Rank Math qua REST `rankmath/v1/updateMeta`. Tra ve danh sach loi.
+
+    Khong lam chet ca luot: ban nhap da nam tren WordPress roi, thieu truong Rank Math
+    thi nguoi dang bai van dien tay duoc. Bao loi ro de sua.
+    """
+    meta = rank_math_meta(fm)
+    if not meta:
+        return ["front matter khong co primary_query / title / meta_description"]
+    url = SITE.rstrip("/") + "/wp-json/rankmath/v1/updateMeta"
+    try:
+        post_json(url, auth, {"objectType": "post", "objectID": int(post_id), "meta": meta})
+    except WpError as exc:
+        return [f"Rank Math: {str(exc)[:200]}"]
+    return []
+
+
 def category_id(slug: str, auth: str, dry: bool) -> int | None:
     if dry:
         return None
@@ -620,6 +657,8 @@ def run(folder: str, dry: bool, category: str, allow_new: bool = False) -> int:
         print(f"     slug    : {slug}")
         print(f"     excerpt : {excerpt[:80]}...")
         print(f"     status  : draft")
+        for k, v in rank_math_meta(fm).items():
+            print(f"     {k:<24}: {v[:70]}")
         print(f"     content : {len(content)} ky tu HTML, "
               f"{content.count('<h3')} muc H3, {content.count('<figure')} figure")
         print("\n     Chay lai khong co --dry-run de tao ban nhap that.")
@@ -638,6 +677,14 @@ def run(folder: str, dry: bool, category: str, allow_new: bool = False) -> int:
     else:
         item = post_json(f"{API}/posts", auth, payload)
         print(f"  [WP] da tao ban nhap #{item['id']}")
+
+    rm_errors = set_rank_math(item["id"], fm, auth)
+    if rm_errors:
+        for e in rm_errors:
+            print(f"  [CANH BAO] {e}")
+        print("     O tu khoa chinh / tieu de SEO / meta cua Rank Math phai dien tay.")
+    else:
+        print("  [WP] da ghi Rank Math: tu khoa chinh, tieu de SEO, meta description")
 
     edit_url = f"{SITE}/wp-admin/post.php?post={item['id']}&action=edit"
     save_state(folder, {"post_id": item["id"], "slug": slug, "edit_url": edit_url,
