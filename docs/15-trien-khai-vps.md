@@ -67,8 +67,17 @@ PubkeyAuthentication yes
 
 rồi `sudo systemctl restart ssh` và `sudo systemctl enable --now fail2ban`.
 
-**Khoá SSH:** đặt các public key gửi kèm ticket vào `/home/contentseo/.ssh/authorized_keys`, mỗi máy
-một dòng:
+**Khoá SSH:** đặt các public key dưới đây vào `/home/contentseo/.ssh/authorized_keys`, mỗi máy một
+dòng, chép **nguyên dòng**:
+
+| Máy | Public key |
+|---|---|
+| Laptop của Khá | `ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEhdHf+uzVXZ5HjmVC/QZYNF1mRACYUQW/EWLqfmi6xT lemin@Kha` |
+
+Dấu vân tay để đối chiếu sau khi đặt khoá (`ssh-keygen -lf authorized_keys`):
+`SHA256:WfbPGAeJh38SViPaTHsZERtXRfeEg5GOYYdbZgvuPn4`
+
+Lệnh đặt khoá:
 
 ```bash
 sudo mkdir -p /home/contentseo/.ssh
