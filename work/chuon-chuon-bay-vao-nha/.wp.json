@@ -1,5 +1,31 @@
 {
   "post_id": 616855,
   "slug": "chuon-chuon-bay-vao-nha",
-  "edit_url": "https://muaban.net/blog/wp-admin/post.php?post=616855&action=edit"
+  "edit_url": "https://muaban.net/blog/wp-admin/post.php?post=616855&action=edit",
+  "media": {
+    "chuon-chuon-dau-be-cua-so.jpg": {
+      "id": 616856,
+      "source_url": "https://blogcdn.muaban.net/wp-content/uploads/2026/09/25153900/chuon-chuon-dau-be-cua-so.jpg"
+    },
+    "chuon-chuon-xanh-vuon-nha-tphcm.jpg": {
+      "id": 616857,
+      "source_url": "https://blogcdn.muaban.net/wp-content/uploads/2026/09/25153914/chuon-chuon-xanh-vuon-nha-tphcm.jpg"
+    },
+    "chuon-chuon-de-trung-mat-nuoc.jpg": {
+      "id": 616858,
+      "source_url": "https://blogcdn.muaban.net/wp-content/uploads/2026/09/25153926/chuon-chuon-de-trung-mat-nuoc.jpg"
+    },
+    "chuon-chuon-kim-xanh-ben-tre.jpg": {
+      "id": 616859,
+      "source_url": "https://blogcdn.muaban.net/wp-content/uploads/2026/09/25153937/chuon-chuon-kim-xanh-ben-tre.jpg"
+    },
+    "chuon-chuon-ot-cai-mau-vang.jpg": {
+      "id": 616860,
+      "source_url": "https://blogcdn.muaban.net/wp-content/uploads/2026/09/25153949/chuon-chuon-ot-cai-mau-vang.jpg"
+    },
+    "chuon-chuon-ot-duc-mau-do.jpg": {
+      "id": 616861,
+      "source_url": "https://blogcdn.muaban.net/wp-content/uploads/2026/09/25154001/chuon-chuon-ot-duc-mau-do.jpg"
+    }
+  }
 }
