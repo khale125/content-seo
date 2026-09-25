@@ -1,0 +1,29 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/lark-start.py\"",
+            "timeout": 120,
+            "statusMessage": "Kiểm cổng duyệt trên Lark"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/lark-stop.py\"",
+            "timeout": 120,
+            "statusMessage": "Kiểm việc chờ trên Lark"
+          }
+        ]
+      }
+    ]
+  }
+}

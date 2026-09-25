@@ -1,0 +1,49 @@
+{
+  "_huong_dan": [
+    "Đọc top 5 kết quả tự nhiên cho truy vấn chính, MỞ THẬT từng trang, chép DANH SÁCH HEADING.",
+    "Chỉ chép heading. Không chép câu chữ, không lấy dữ liệu độc quyền hay ảnh của họ.",
+    "Mục đích là biết top đang trả lời CÂU HỎI NÀO, không phải để sao chép sườn bài của ai.",
+    "Trang nào chặn truy cập thì ghi vào not_captured kèm lý do — đừng bỏ qua im lặng.",
+    "Sau khi điền: python scripts/serp_outline.py analyze work/<slug>/competitors.json"
+  ],
+
+  "primary_query": "",
+  "captured_on": "",
+  "captured_by": "seo-outline-bds",
+
+  "competitors": [
+    {
+      "rank": 1,
+      "url": "https://...",
+      "title": "",
+      "type": "blog | cong-phap-luat | bao | trang-danh-sach | cong-cu | dien-dan | trang-chinh-phu",
+      "headings": [
+        "chép nguyên văn từng heading H2/H3 của họ, theo đúng thứ tự"
+      ]
+    },
+    {
+      "rank": 2,
+      "url": "https://...",
+      "title": "",
+      "type": "",
+      "headings": []
+    },
+    {
+      "rank": 3,
+      "url": "https://...",
+      "title": "",
+      "type": "",
+      "headings": []
+    }
+  ],
+
+  "not_captured": [
+    {
+      "rank": 0,
+      "url": "https://...",
+      "reason": "vì sao không đọc được (403, tường phí, trang render bằng JS...)"
+    }
+  ],
+
+  "capture_limitation": "Ghi rõ đọc được bao nhiêu trên bao nhiêu kết quả, để người duyệt biết mức sàn tính trên cỡ mẫu nào."
+}

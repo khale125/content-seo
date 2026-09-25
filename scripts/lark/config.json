@@ -1,0 +1,22 @@
+{
+  "title": "Content SEO — Bất động sản (Muaban.net)",
+  "app_token": "UoewbMY9xajYd0sJky4lW6G6g9e",
+  "base_url": "https://dinhanh360.sg.larksuite.com/base/UoewbMY9xajYd0sJky4lW6G6g9e",
+  "tables": {
+    "pipeline": "tblZkgkb8sw9pCp4",
+    "evidence": "tbljfmfcyQO8KSuA",
+    "audit": "tbl4Ur2zWVUKQiO8",
+    "guide": "tblwC1Q86CBhJx6b"
+  },
+  "doc_folder_token": "R7tFfJ3POl9tcLdIMDllKeAMgJe",
+  "doc_folder_url": "https://dinhanh360.sg.larksuite.com/drive/folder/R7tFfJ3POl9tcLdIMDllKeAMgJe",
+  "doc_layout": "type",
+  "doc_folders": {
+    "brief": "KNBXfC2g7lcCXBdU661lhqDegMc",
+    "outline": "NcaQfOXQLlZ3RDdVJmpl8Miugnb",
+    "article": "Em8YfVkQglGYLIdwH1XlxpyEgFY",
+    "qa": ""
+  },
+  "notify_chat_id": "oc_4e7893876a880daba671b56789e322d1",
+  "notify_chat_name": "Duyệt content SEO"
+}

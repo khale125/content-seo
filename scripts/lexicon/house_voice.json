@@ -1,0 +1,286 @@
+{
+  "_note": "Sinh tu dong boi scripts/house_voice_profile.py. Dung sua tay. Doi nguong bang cach them bai vao reference/muaban-blog/ roi chay lai.",
+  "corpus_size": 24,
+  "corpus": [
+    "1-cong-dat-bao-nhieu-tien-116953.md",
+    "bang-gia-chuyen-doi-dat-nong-nghiep-sang-dat-tho-cu-2025-604097.md",
+    "cach-lam-mat-phong-tro-159561.md",
+    "chi-phi-xay-phong-tro-16m2-296486.md",
+    "co-nen-o-ky-tuc-xa-dai-hoc-quoc-gia-198409.md",
+    "hai-phong-nen-mua-dat-o-dau-612657.md",
+    "khoa-hoc-dau-tu-bat-dong-san-online-616694.md",
+    "khu-vuc-thue-tro-gan-truong-dai-hoc-tai-chinh-marketing-616657.md",
+    "kinh-nghiem-mua-dat-dau-tu-2-613800.md",
+    "kinh-nghiem-thue-phong-tro-binh-chanh-616520.md",
+    "kinh-nghiem-thue-phong-tro-binh-thanh-616436.md",
+    "kinh-nghiem-thue-phong-tro-gia-re-o-ha-noi-616642.md",
+    "kinh-nghiem-thue-phong-tro-quan-1-616005.md",
+    "kinh-nghiem-thue-phong-tro-quan-10-616254.md",
+    "kinh-nghiem-thue-phong-tro-quan-11-616495.md",
+    "kinh-nghiem-thue-phong-tro-quan-12-616488.md",
+    "kinh-nghiem-thue-phong-tro-quan-8-616170.md",
+    "kinh-nghiem-thue-phong-tro-quan-binh-tan-616276.md",
+    "kinh-nghiem-thue-phong-tro-quan-go-vap-616438.md",
+    "kinh-nghiem-thue-phong-tro-tai-nha-be-616546.md",
+    "kinh-nghiem-thue-phong-tro-tai-thu-duc-616473.md",
+    "kinh-nghiem-thue-tro-gan-truong-dai-hoc-su-pham-ky-thuat-tphcm-616612.md",
+    "thiet-ke-phong-tro-15m2-dep-hon-voi-5-bi-kip-90855.md",
+    "xac-dinh-vi-tri-thua-dat-tren-ban-do-309618.md"
+  ],
+  "metrics": {
+    "sentence_words_mean": {
+      "min": 21.71,
+      "p10": 25.397,
+      "median": 28.075,
+      "p90": 31.99,
+      "max": 32.88
+    },
+    "burstiness": {
+      "min": 0.214,
+      "p10": 0.253,
+      "median": 0.298,
+      "p90": 0.499,
+      "max": 0.605
+    },
+    "short_sentence_ratio": {
+      "min": 0.0,
+      "p10": 0.0,
+      "median": 0.015,
+      "p90": 0.103,
+      "max": 0.263
+    },
+    "long_sentence_ratio": {
+      "min": 0.096,
+      "p10": 0.126,
+      "median": 0.198,
+      "p90": 0.384,
+      "max": 0.406
+    },
+    "para_words_mean": {
+      "min": 32.19,
+      "p10": 44.806,
+      "median": 59.07,
+      "p90": 66.732,
+      "max": 73.78
+    },
+    "para_sentences_mean": {
+      "min": 1.46,
+      "p10": 1.846,
+      "median": 2.055,
+      "p90": 2.381,
+      "max": 2.48
+    },
+    "para_burstiness": {
+      "min": 0.17,
+      "p10": 0.19,
+      "median": 0.334,
+      "p90": 0.551,
+      "max": 0.903
+    },
+    "one_sentence_para_ratio": {
+      "min": 0.0,
+      "p10": 0.028,
+      "median": 0.167,
+      "p90": 0.304,
+      "max": 0.577
+    },
+    "ban_per_1000": {
+      "min": 0.0,
+      "p10": 1.216,
+      "median": 6.41,
+      "p90": 10.216,
+      "max": 16.77
+    },
+    "connector_open_ratio": {
+      "min": 0.0,
+      "p10": 0.0,
+      "median": 0.057,
+      "p90": 0.126,
+      "max": 0.143
+    },
+    "connector_per_1000": {
+      "min": 2.83,
+      "p10": 2.94,
+      "median": 4.615,
+      "p90": 6.949,
+      "max": 12.06
+    },
+    "advice_per_1000": {
+      "min": 0.82,
+      "p10": 2.295,
+      "median": 6.46,
+      "p90": 11.17,
+      "max": 15.03
+    },
+    "advice_subject_ratio": {
+      "min": 0.0,
+      "p10": 0.027,
+      "median": 0.634,
+      "p90": 0.85,
+      "max": 1.0
+    },
+    "bare_advice_per_1000": {
+      "min": 0.0,
+      "p10": 0.708,
+      "median": 1.925,
+      "p90": 4.242,
+      "max": 5.47
+    },
+    "minh_per_1000": {
+      "min": 0.0,
+      "p10": 0.0,
+      "median": 0.0,
+      "p90": 1.055,
+      "max": 1.89
+    },
+    "viec_per_1000": {
+      "min": 0.71,
+      "p10": 1.888,
+      "median": 3.44,
+      "p90": 7.066,
+      "max": 10.54
+    },
+    "su_per_1000": {
+      "min": 0.0,
+      "p10": 0.093,
+      "median": 0.915,
+      "p90": 2.03,
+      "max": 5.32
+    },
+    "abstract_start_ratio": {
+      "min": 0.0,
+      "p10": 0.011,
+      "median": 0.042,
+      "p90": 0.076,
+      "max": 0.109
+    },
+    "front_clause_ratio": {
+      "min": 0.145,
+      "p10": 0.295,
+      "median": 0.434,
+      "p90": 0.491,
+      "max": 0.59
+    },
+    "dem_per_1000": {
+      "min": 0.0,
+      "p10": 0.0,
+      "median": 0.0,
+      "p90": 0.49,
+      "max": 0.82
+    },
+    "passive_admin_per_1000": {
+      "min": 0.0,
+      "p10": 0.0,
+      "median": 0.0,
+      "p90": 0.868,
+      "max": 2.68
+    },
+    "question_in_prose_ratio": {
+      "min": 0.0,
+      "p10": 0.0,
+      "median": 0.0,
+      "p90": 0.018,
+      "max": 0.039
+    },
+    "digit_sentence_ratio": {
+      "min": 0.032,
+      "p10": 0.073,
+      "median": 0.23,
+      "p90": 0.395,
+      "max": 0.479
+    },
+    "bold_ratio": {
+      "min": 0.0,
+      "p10": 0.0,
+      "median": 0.0,
+      "p90": 0.0,
+      "max": 0.0
+    },
+    "emdash_per_1000": {
+      "min": 0.0,
+      "p10": 0.0,
+      "median": 0.0,
+      "p90": 0.0,
+      "max": 0.0
+    },
+    "body_words": {
+      "min": 1059.0,
+      "p10": 1858.1,
+      "median": 2207.0,
+      "p90": 2823.1,
+      "max": 3202.0
+    },
+    "advice_sentences": {
+      "min": 2.0,
+      "p10": 4.0,
+      "median": 14.5,
+      "p90": 25.7,
+      "max": 39.0
+    },
+    "h3_sections": {
+      "min": 3.0,
+      "p10": 4.0,
+      "median": 6.0,
+      "p90": 9.7,
+      "max": 11.0
+    },
+    "h4_per_h3": {
+      "min": 0.33,
+      "p10": 0.827,
+      "median": 1.49,
+      "p90": 2.726,
+      "max": 4.25
+    }
+  },
+  "deviation_budget": {
+    "checked_metrics": [
+      "sentence_words_mean",
+      "burstiness",
+      "short_sentence_ratio",
+      "long_sentence_ratio",
+      "para_words_mean",
+      "para_burstiness",
+      "connector_per_1000",
+      "ban_per_1000",
+      "advice_per_1000",
+      "question_in_prose_ratio",
+      "emdash_per_1000",
+      "advice_subject_ratio",
+      "bare_advice_per_1000",
+      "minh_per_1000",
+      "viec_per_1000",
+      "abstract_start_ratio",
+      "front_clause_ratio",
+      "dem_per_1000"
+    ],
+    "median": 3.0,
+    "p90": 6.7,
+    "max": 11,
+    "per_article": [
+      6,
+      7,
+      5,
+      2,
+      5,
+      3,
+      7,
+      4,
+      3,
+      5,
+      2,
+      3,
+      3,
+      0,
+      5,
+      0,
+      3,
+      3,
+      0,
+      4,
+      1,
+      1,
+      5,
+      11
+    ]
+  }
+}

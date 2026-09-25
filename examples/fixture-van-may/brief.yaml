@@ -1,0 +1,7 @@
+primary_query: "kinh nghiệm mua chung cư"
+intent: "investigational"
+internal_host: "muaban.net"
+entities:
+  - "phí bảo trì"
+  - "sổ hồng"
+  - "hợp đồng mua bán"

@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "items": {
+    "990850d26085d70b": {
+      "slug": "chi-phi-chuyen-dat-nong-nghiep-len-tho-cu-2026",
+      "event": "Nghị định 50/2026/NĐ-CP quy định mức thu tiền sử dụng đất khi hộ gia đình, cá nhân chuyển đất vườn, ao, nông nghiệp sang đất ở theo ba bậc 30% - 50% - 100% phần chênh lệch, và chỉ áp dụng một lần cho mỗi hộ trên một thửa đất",
+      "primary_query": "chuyển đất nông nghiệp lên thổ cư mất bao nhiêu tiền",
+      "source_url": "https://xaydungchinhsach.chinhphu.vn/quy-dinh-moi-ve-tinh-tien-su-dung-dat-doi-voi-ho-gia-dinh-ca-nhan-119260214103104692.htm",
+      "source_tier": "GOV",
+      "published_date": "2026-03-03",
+      "proposed_on": "2026-09-15",
+      "outcome": "DE_XUAT",
+      "note": ""
+    },
+    "a1a8f2f01798162e": {
+      "slug": "dieu-kien-mua-nha-o-xa-hoi-2026",
+      "event": "Nghị định 54/2026/NĐ-CP sửa quy định mua, bán, thuê mua, cho thuê và giá nhà ở xã hội: ngưỡng thu nhập tối đa 15 triệu đồng/tháng với người độc thân và 30 triệu đồng/tháng với vợ chồng, đồng thời chuyển việc xác nhận thu nhập sang công an cấp xã theo cơ chế kê khai và hậu kiểm",
+      "primary_query": "điều kiện mua nhà ở xã hội",
+      "source_url": "https://xaydungchinhsach.chinhphu.vn/nghi-dinh-so-54-2026-nd-cp-quy-dinh-moi-ve-mua-ban-thue-mua-cho-thue-gia-nha-o-xa-hoi-119260220165054643.htm",
+      "source_tier": "GOV",
+      "published_date": "2026-02-09",
+      "proposed_on": "2026-09-15",
+      "outcome": "DE_XUAT",
+      "note": ""
+    },
+    "e0f79eaeaa4d183f": {
+      "slug": "vay-mua-nha-khi-gia-giam-lai-suat-cao",
+      "event": "Bộ Xây dựng công bố quý II/2026: giá giao dịch thứ cấp căn hộ, biệt thự và đất nền có xu hướng giảm nhẹ (đất nền giảm 2-3%), trong khi lãi suất cho vay bất động sản phổ biến 12-14%/năm và thả nổi có nơi lên tới 15-16%/năm; giao dịch thành công 100.005, bằng 71,5% quý I",
+      "primary_query": "có nên vay mua nhà thời điểm này",
+      "source_url": "https://moc.gov.vn/vn/tin-tuc/1206/96449/thi-truong-bat-dong-san-quy-ii2026-nguon-cung-khoi-sac-tap-trung-thao-go-the-che-va-thuc-day-nha-o-xa-hoi.aspx",
+      "source_tier": "GOV",
+      "published_date": "2026-08-21",
+      "proposed_on": "2026-09-15",
+      "outcome": "DE_XUAT",
+      "note": ""
+    }
+  }
+}

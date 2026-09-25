@@ -1,0 +1,7 @@
+primary_query: "đặt cọc mua nhà cần kiểm tra gì"
+intent: "informational-thu-tuc"
+internal_host: "muaban.net"
+entities:
+  - "văn phòng đăng ký đất đai"
+  - "giấy chứng nhận"
+  - "công chứng"

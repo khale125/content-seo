@@ -1,0 +1,104 @@
+# Brief nội dung — điền trước khi lên outline.
+# Đọc docs/01-intent-va-keyword.md. Trường nào chưa tra được thì để trống,
+# KHÔNG điền phỏng đoán.
+
+content_id: "002"
+slug: "chuon-chuon-bay-vao-nha"
+created: "2026-09-24"
+author_agent: "seo-outline-bds"
+
+# --- Intent ---
+primary_query: "chuồn chuồn bay vào nhà"
+# Volume search do NGUOI DUNG cung cap cung voi tu khoa chinh. Agent KHONG duoc tu
+# dien hay uoc luong con so nay - khong co thi de trong (quy tac 1).
+search_volume: "4900"
+intent: "informational-khai-niem"
+serp_format_expected: "bai-huong-dan"
+same_page_variants:
+  - "chuồn chuồn bay vào nhà là điềm gì"
+  - "chuồn chuồn bay vào nhà tốt hay xấu"
+  - "chuồn chuồn bay vào nhà có ý nghĩa gì"
+separate_pages:                 # truy vấn có SERP khác → bài khác, ghi để lên lịch sau
+  - "chuồn chuồn bay thấp thì mưa"
+  - "mơ thấy chuồn chuồn"
+
+entities:                       # thực thể phải xuất hiện tự nhiên trong bài
+  - "chuồn chuồn"
+  - "bộ Odonata"
+  - "ánh sáng phân cực"
+  - "chuồn chuồn kim"
+  - "chuồn chuồn ớt"
+  - "muỗi"
+questions_to_answer:            # câu hỏi thật, lấy từ "Mọi người cũng hỏi" / diễn đàn / khách hàng
+  - "chuồn chuồn bay vào nhà là điềm gì"
+  - "chuồn chuồn bay vào nhà là tốt hay xấu"
+  - "vì sao chuồn chuồn lại bay vào nhà"
+  - "có nên đuổi hay giết chuồn chuồn bay vào nhà không"
+  - "chuồn chuồn bay vào nhà ban đêm, vào phòng thờ, vào mùng 1 thì sao"
+  - "chuồn chuồn màu đen, màu đỏ, màu vàng bay vào nhà có khác nhau không"
+  - "mơ thấy chuồn chuồn bay vào nhà là điềm gì"
+  - "chuồn chuồn bay vào nhà ứng với con số nào theo dân gian"
+
+# --- Người đọc ---
+reader: "người vừa thấy một con chuồn chuồn bay vào nhà mình trong hôm nay, gõ điện thoại tra ngay lúc đó"
+reader_task: "biết dân gian nói gì, biết lý do tự nhiên khiến nó bay vào, và quyết định nên làm gì với con chuồn chuồn đang trong nhà"
+reader_knowledge: "moi-bat-dau"
+
+# --- Khoảng trống ---
+gap_type: "thieu-cu-the"
+gap_evidence: >-
+  Cả 5 kết quả top đều liệt kê điềm báo rất dài nhưng phần "vì sao chuồn chuồn bay vào nhà" thì
+  bỏ trống hoặc viết chung chung không nguồn: invert.vn (#3) không có phần này, mogi.vn (#4) chỉ
+  nhắc chuồn chuồn là côn trùng, happynest.vn (#1) và sbshouse.vn (#2) có mục vì sao nhưng không
+  dẫn một nguồn nào. Bài đang đăng của Muaban.net cũng không có mục này.
+unique_angle: >-
+  Giải thích hiện tượng bằng nguồn bình duyệt — chuồn chuồn nhận mặt nước qua ánh sáng phân cực
+  ngang nên lao vào mái tôn, sân ướt, cửa kính — cộng hướng dẫn đưa chuồn chuồn ra ngoài mà không
+  giết nó, dựa trên số muỗi một con ăn mỗi ngày. Không kết quả nào trong top 5 có cả hai.
+
+# --- Quyết định URL ---
+url_decision: "UPDATE"
+existing_urls:
+  - "https://muaban.net/blog/chuon-chuon-bay-vao-nha-219339/"
+url_decision_reason: >-
+  Blog đã có đúng bài này, đăng 06/11/2024, đang đứng trong top 5 của chính truy vấn. Viết bài mới
+  sẽ tự cạnh tranh với URL đang có thứ hạng. Bản cập nhật giữ nguyên URL, bổ sung mục "vì sao"
+  có nguồn, mục mơ thấy, mục hỏi đáp, và viết lại mục con số theo hướng quan niệm
+  dân gian, bỏ mọi câu dẫn dắt số đề.
+
+# --- Bối cảnh ---
+why_now: >-
+  Evergreen, nhưng bài gốc đã gần hai năm, chưa từng ghi ngày cập nhật, và thiếu đúng phần mà cả
+  SERP đang bỏ trống. Đây là cơ hội cập nhật để giữ thứ hạng chứ không phải chạy theo tin mới.
+geography: "toàn quốc"
+property_type: ""
+data_as_of: "2026-09-24"
+
+# --- YMYL ---
+ymyl_areas:
+  - ""
+ymyl_disclaimer_needed: true
+expert_review_needed: false
+expert_review_scope: ""
+
+# --- CTA và liên kết ---
+cta: "mở cửa sổ đưa chuồn chuồn ra ngoài thay vì đập, và kiểm tra chỗ đọng nước quanh nhà"
+# Mien tru muc dan tin dang Muaban.net (quy tac 15). Chi dat false cho bai ngoai mang
+# bat dong san, va phai ghi ly do — nguoi duyet doc dong nay.
+muaban_listing_section: false
+listing_section_skip_reason: "Bài điềm báo dân gian, không thuộc bất động sản. Người duyệt yêu cầu xoá mục Tìm nhà đất và phòng trọ trên Muaban.net vì gắn vào rất gượng; liên kết nội bộ chuyển sang câu kết bài."
+internal_host: "muaban.net"
+internal_link_targets:
+  - "https://muaban.net/bat-dong-san"
+  - "https://muaban.net/blog/ech-vao-nha-587031/"
+external_source_targets:
+  - "https://pmc.ncbi.nlm.nih.gov/articles/PMC4116178/"
+  - "https://www.smithsonianmag.com/science-nature/14-fun-facts-about-dragonflies-from-their-lethal-hunting-prowess-to-incredible-migratory-feats-96882693/"
+
+# --- Vòng đời ---
+review_after: "2027-09-24"
+refresh_triggers:
+  - "văn bản pháp luật liên quan thay đổi"
+  - "số liệu hết kỳ"
+  - "nguồn chết"
+  - "SERP đổi format"

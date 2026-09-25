@@ -1,0 +1,15 @@
+{
+  "source_sheet": "https://docs.google.com/spreadsheets/d/1tJhYa4rs7Habd_h4gY-q47czG_fTQKglB8LwrHxkq24/edit?gid=0",
+  "imported_from": "link-gid0.csv",
+  "imported_at": "2026-09-24",
+  "sheet": "BĐS MBN",
+  "rows_in_sheet": 2279,
+  "rows_stored": 2137,
+  "skipped_no_url": 23,
+  "url_prefix_repaired": 1,
+  "unique_urls": 1217,
+  "with_province": 1878,
+  "with_district": 1440,
+  "cate_pages": 1560,
+  "tag_pages": 577
+}

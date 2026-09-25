@@ -1,0 +1,42 @@
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+Thumbs.db
+
+# Bao cao do may sinh ra, chay lai la co
+work/*/qa-report.json
+examples/*/qa-report.json
+wiki/lint-report.json
+
+# Trang thai rieng cua tung may, khong chia se duoc
+work/.lark-watch.json
+work/.lark-watch.json.tmp
+work/.lark-stop.json
+
+# Bi mat - KHONG BAO GIO commit
+.env
+.env.*
+!.env.example
+.muaban-wp.json
+*.pem
+*.key
+
+# Goi ban giao va ban luu
+*.zip
+*.tar.gz
+logs/
+
+# LUU Y ve hai file KHONG nam trong danh sach nay:
+#
+#   work/<slug>/.lark.json   buoc thu muc voi dung ban ghi tren Lark Base
+#   work/<slug>/.wp.json     buoc bai voi dung ban nhap tren WordPress
+#
+# Ca hai DUOC commit co chu y, vi day la repo dung chung cua mot team chia se
+# mot Base. Thieu .lark.json thi dong nghiep clone repo ve khong push/pull/gate
+# duoc bai da co; thieu .wp.json thi lan chay sau tao mot ban nhap TRUNG thay vi
+# cap nhat ban nhap cu.
+#
+# Doi lai: hai nguoi cung sua mot bai se cham nhau o `content_version` va
+# `content_hash`. Khi git bao conflict o .lark.json, lay ban co content_version
+# CAO HON roi chay lai `lark_sync.py push work/<slug>`.

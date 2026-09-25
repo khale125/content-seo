@@ -1,0 +1,40 @@
+{
+  "primary_query": "chuyển đất nông nghiệp lên thổ cư mất bao nhiêu tiền",
+  "captured_on": "2026-09-15",
+  "competitors": [
+    {
+      "rank": 1,
+      "url": "https://example.com/a",
+      "title": "A",
+      "type": "cong-phap-luat",
+      "headings": [
+        "Tiền sử dụng đất",
+        "Lệ phí trước bạ",
+        "Phí thẩm định hồ sơ"
+      ]
+    },
+    {
+      "rank": 2,
+      "url": "https://example.com/b",
+      "title": "B",
+      "type": "cong-phap-luat",
+      "headings": [
+        "Tiền sử dụng đất",
+        "Lệ phí trước bạ",
+        "Thủ tục nộp hồ sơ"
+      ]
+    },
+    {
+      "rank": 3,
+      "url": "https://example.com/c",
+      "title": "C",
+      "type": "blog",
+      "headings": [
+        "Tiền sử dụng đất tính thế nào",
+        "Phí thẩm định hồ sơ",
+        "Thủ tục nộp hồ sơ"
+      ]
+    }
+  ],
+  "capture_limitation": "FIXTURE gia lap, nguon example.com."
+}

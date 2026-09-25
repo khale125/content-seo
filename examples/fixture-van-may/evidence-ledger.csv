@@ -1,0 +1,3 @@
+claim_id,claim,claim_type,risk,source_type,source_url,source_title,published_date,effective_date,retrieved_date,supporting_quote,status,note
+C01,"Nguồn cung căn hộ mới tại thành phố tăng so với cùng kỳ",FACT,MED,REPORT,https://example.com/bao-cao-thi-truong,"Báo cáo thị trường (nguồn giả lập cho fixture)",2026-07-01,,2026-09-15,"Đoạn trích giả lập dùng để kiểm thử script, không phải nguồn thật",VERIFIED,"Fixture - nguon gia lap"
+C02,"Giá căn hộ đã tăng khoảng 15% trong năm qua",FACT,HIGH,NONE,,,,,2026-09-15,,GAP,"Khong tra duoc nguon - dung de kiem thu canh bao GAP"

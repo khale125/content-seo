@@ -1,0 +1,22 @@
+# Team lam viec tren ca Windows va Linux. Khong co dong nay thi moi lan checkout
+# cheo he dieu hanh la ca repo hien ra nhu da sua het, va diff khong doc duoc nua.
+* text=auto eol=lf
+
+# Script cho Windows phai giu CRLF moi chay dung
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Nhi phan, dung dung vao
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.gif binary
+*.pdf binary
+*.zip binary
+
+# Cho GitHub dem ngon ngu dung: du lieu va tai lieu khong phai ma nguon
+reference/** linguist-documentation
+docs/** linguist-documentation
+examples/** linguist-documentation

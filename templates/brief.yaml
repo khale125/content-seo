@@ -1,0 +1,71 @@
+# Brief nội dung — điền trước khi lên outline.
+# Đọc docs/01-intent-va-keyword.md. Trường nào chưa tra được thì để trống,
+# KHÔNG điền phỏng đoán.
+
+content_id: ""                  # so thu tu thuan: 001, 002, 003 — agent tu cap
+slug: ""                        # thu-tuc-sang-ten-so-do
+created: ""                     # YYYY-MM-DD
+author_agent: ""
+
+# --- Intent ---
+primary_query: ""
+# Volume search do NGUOI DUNG cung cap cung voi tu khoa chinh. Agent KHONG duoc tu
+# dien hay uoc luong con so nay - khong co thi de trong (quy tac 1).
+search_volume: ""
+intent: ""                      # informational-khai-niem | informational-thu-tuc |
+                                # investigational | transactional-local | navigational
+serp_format_expected: ""        # bai-huong-dan | trang-danh-sach | cong-cu | trang-thuc-the
+same_page_variants:
+  - ""
+separate_pages:                 # truy vấn có SERP khác → bài khác, ghi để lên lịch sau
+  - ""
+
+entities:                       # thực thể phải xuất hiện tự nhiên trong bài
+  - ""
+questions_to_answer:            # câu hỏi thật, lấy từ "Mọi người cũng hỏi" / diễn đàn / khách hàng
+  - ""
+
+# --- Người đọc ---
+reader: ""                      # cụ thể: "người có 900tr tiền mặt, mua căn hộ 2PN Bình Tân, chưa từng vay"
+reader_task: ""                 # đọc xong họ QUYẾT ĐỊNH ĐƯỢC điều gì
+reader_knowledge: ""            # moi-bat-dau | da-tim-hieu | trong-nganh
+
+# --- Khoảng trống ---
+gap_type: ""                    # loi-thoi | thieu-cu-the | sai-format | thieu-nhom-nguoi-doc | thieu-du-lieu-dia-phuong
+gap_evidence: ""                # top hiện tại thiếu/sai cụ thể cái gì (dẫn URL)
+unique_angle: ""                # thứ bài này có mà 5 kết quả đầu không có
+
+# --- Quyết định URL ---
+url_decision: ""                # CREATE | UPDATE | MERGE | SKIP
+existing_urls:                  # URL cũ trên muaban.net/blog phục vụ cùng intent
+  - ""
+url_decision_reason: ""
+
+# --- Bối cảnh ---
+why_now: ""                     # văn bản mới / số liệu mới / mùa vụ / evergreen + lý do cập nhật
+geography: ""                   # toàn quốc | TP.HCM | quận Bình Tân | ...
+property_type: ""               # căn hộ | nhà riêng | đất nền | phòng trọ | mặt bằng
+data_as_of: ""                  # mốc dữ liệu sẽ ghi trong bài, YYYY-MM-DD
+
+# --- YMYL ---
+ymyl_areas:                     # phap-ly | thue | tin-dung | an-toan | quyet-dinh-tai-chinh
+  - ""
+ymyl_disclaimer_needed: true
+expert_review_needed: false
+expert_review_scope: ""
+
+# --- CTA và liên kết ---
+cta: ""                         # việc cụ thể người đọc làm tiếp, không phải "truy cập Muaban.net"
+internal_host: "muaban.net"
+internal_link_targets:
+  - ""                          # danh mục/tin đăng đúng địa bàn + loại hình
+external_source_targets:
+  - ""                          # nguồn gốc dự kiến dẫn
+
+# --- Vòng đời ---
+review_after: ""                # YYYY-MM-DD (mặc định 6 tháng; 3 tháng nếu có số liệu thị trường)
+refresh_triggers:
+  - "văn bản pháp luật liên quan thay đổi"
+  - "số liệu hết kỳ"
+  - "nguồn chết"
+  - "SERP đổi format"

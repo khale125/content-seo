@@ -1,0 +1,71 @@
+# Brief nội dung — điền trước khi lên outline.
+# Đọc docs/01-intent-va-keyword.md. Trường nào chưa tra được thì để trống,
+# KHÔNG điền phỏng đoán.
+
+content_id: "001"                  # so thu tu thuan: 001, 002, 003 — agent tu cap
+slug: "kinh-nghiem-thue-tro-gan-truong-dai-hoc-kinh-te-tp-hcm"                        # thu-tuc-sang-ten-so-do
+created: "2026-09-18"                     # YYYY-MM-DD
+author_agent: "lark_sync intake"
+
+# --- Intent ---
+primary_query: "kinh nghiệm thuê trọ gần trường đại học kinh tế TP.HCM"
+# Volume search do NGUOI DUNG cung cap cung voi tu khoa chinh. Agent KHONG duoc tu
+# dien hay uoc luong con so nay - khong co thi de trong (quy tac 1).
+search_volume: "0"
+intent: "informational-thu-tuc"
+                                # investigational | transactional-local | navigational
+serp_format_expected: "bai-huong-dan"
+same_page_variants:
+  - ""
+separate_pages:                 # truy vấn có SERP khác → bài khác, ghi để lên lịch sau
+  - ""
+
+entities:                       # thực thể phải xuất hiện tự nhiên trong bài
+  - ""
+questions_to_answer:            # câu hỏi thật, lấy từ "Mọi người cũng hỏi" / diễn đàn / khách hàng
+  - ""
+
+# --- Người đọc ---
+reader: "Tan sinh vien UEH va phu huynh, lan dau tim tro o TP.HCM, chua biet minh se hoc o co so nao"
+reader_task: "Biet minh hoc co so nao, khoanh duoc vung tro hop ly, va loc tin dang dung ten phuong moi"
+reader_knowledge: "moi-bat-dau"
+
+# --- Khoảng trống ---
+gap_type: "thieu-nhom-nguoi-doc"
+gap_evidence: "Ba bai tinh vao muc san (vi tri 3, 4, 5) deu viet cho truong KHAC: Cong nghiep, Su pham, Mo TPHCM. Hai bai rieng cho UEH nam o vi tri 6-7 va moi bai chi phuc vu MOT co so, trong khi UEH co 10 co so tai TP.HCM."
+unique_angle: "Chon khu tro theo CO SO minh thuc su hoc, khong theo ten truong. Kem canh bao ten phuong da doi tu 01/7/2025 lam hong thao tac loc tin dang."
+
+# --- Quyết định URL ---
+url_decision: "CREATE"
+existing_urls:                  # URL cũ trên muaban.net/blog phục vụ cùng intent
+  - ""
+url_decision_reason: "Blog da co cum bai 'kinh nghiem thue tro gan truong' cho Su pham Ky thuat va Tai chinh Marketing, nhung CHUA co bai nao cho UEH. Da tra site:muaban.net/blog, khong thay URL cung intent."
+
+# --- Bối cảnh ---
+why_now: "Dia chi cac co so UEH cap nhat tu 01/7/2025 theo sap xep don vi hanh chinh cap xa, nen tin dang va bai viet cu con ghi ten phuong cu."
+geography: "TP.HCM"
+property_type: "phong tro"
+data_as_of: "2026-09-18"                  # mốc dữ liệu sẽ ghi trong bài, YYYY-MM-DD
+
+# --- YMYL ---
+ymyl_areas:                     # phap-ly | thue | tin-dung | an-toan | quyet-dinh-tai-chinh
+  - ""
+ymyl_disclaimer_needed: true
+expert_review_needed: false
+expert_review_scope: ""
+
+# --- CTA và liên kết ---
+cta: "xac dinh co so minh hoc truoc khi di xem phong"
+internal_host: "muaban.net"
+internal_link_targets:
+  - ""                          # danh mục/tin đăng đúng địa bàn + loại hình
+external_source_targets:
+  - ""                          # nguồn gốc dự kiến dẫn
+
+# --- Vòng đời ---
+review_after: "2027-06-30"
+refresh_triggers:
+  - "văn bản pháp luật liên quan thay đổi"
+  - "số liệu hết kỳ"
+  - "nguồn chết"
+  - "SERP đổi format"

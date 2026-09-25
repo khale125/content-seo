@@ -1,0 +1,5 @@
+primary_query: "chuyển đất nông nghiệp lên thổ cư mất bao nhiêu tiền"
+intent: "informational-thu-tuc"
+questions_to_answer:
+  - "Ba bậc áp dụng cho phần diện tích nào?"
+  - "Hạn mức giao đất ở tra ở đâu?"

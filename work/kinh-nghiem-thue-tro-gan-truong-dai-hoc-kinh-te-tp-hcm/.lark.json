@@ -1,0 +1,16 @@
+{
+  "record_id": "recvvxuDPHThTD",
+  "content_id": "001",
+  "intaken_at": "2026-09-18T11:05:24+07:00",
+  "placed": {
+    "MZf0bXfLyorEkPxfNURl8T7JgWh": "KNBXfC2g7lcCXBdU661lhqDegMc",
+    "RHXQbQGVxoQE9ixxKKvlqPGng1e": "NcaQfOXQLlZ3RDdVJmpl8Miugnb",
+    "P6JxbmZPWoO9vLxkCoOl4ji9gKb": "Em8YfVkQglGYLIdwH1XlxpyEgFY"
+  },
+  "content_version": "0.1.10",
+  "content_hash": "eb21b8166b0828f5",
+  "brief_token": "MZf0bXfLyorEkPxfNURl8T7JgWh",
+  "outline_token": "RHXQbQGVxoQE9ixxKKvlqPGng1e",
+  "article_token": "P6JxbmZPWoO9vLxkCoOl4ji9gKb",
+  "last_push": "2026-09-24T16:12:57+07:00"
+}

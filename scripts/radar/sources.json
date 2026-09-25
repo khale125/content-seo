@@ -1,0 +1,131 @@
+{
+  "version": "1.0",
+  "note": "Danh muc nguon cho radar phat hien chu de. CHI liet ke URL da that su mo duoc va xac minh. Ngay xac minh ghi o 'verified_on'. Khi them nguon moi, phai mo that roi moi ghi vao day.",
+  "verified_on": "2026-09-15",
+
+  "tiers": {
+    "LAW": "Van ban phap luat. Nguon cuoi, dung truc tiep lam can cu.",
+    "GOV": "Co quan quan ly nha nuoc. Nguon cuoi cho so lieu va chinh sach nganh.",
+    "STATS": "Co quan thong ke. Nguon cuoi cho so lieu vi mo.",
+    "SIGNAL": "Bao chi va nguon thu cap. CHI dung de phat hien su kien; bat buoc truy nguoc ve van ban goc truoc khi viet."
+  },
+
+  "sources": [
+    {
+      "id": "chinhphu-vanban",
+      "name": "Cổng thông tin văn bản quy phạm pháp luật Chính phủ",
+      "tier": "LAW",
+      "url": "https://vanban.chinhphu.vn",
+      "verified_on": "2026-09-15",
+      "publishes": "Luật, pháp lệnh, nghị định, quyết định, thông tư, văn bản hợp nhất. Lọc được theo ngày ban hành và cơ quan ban hành.",
+      "watch_for": [
+        "văn bản mới về đất đai, nhà ở, kinh doanh bất động sản",
+        "nghị định/thông tư hướng dẫn thi hành luật",
+        "văn bản sửa đổi, thay thế văn bản đang được bài cũ dẫn"
+      ],
+      "cadence": "hằng tuần"
+    },
+    {
+      "id": "moc",
+      "name": "Bộ Xây dựng",
+      "tier": "GOV",
+      "url": "https://moc.gov.vn",
+      "verified_on": "2026-09-15",
+      "news_path_pattern": "/vn/tin-tuc/{category_id}/{article_id}/{slug}.aspx",
+      "publishes": "Công bố quý về nhà ở và thị trường bất động sản: số dự án cấp phép, số căn, lượng giao dịch căn hộ/nhà ở và đất nền, tồn kho, mặt bằng giá theo phân khúc và theo địa bàn (triệu đồng/m²).",
+      "watch_for": [
+        "công bố quý về nhà ở và thị trường bất động sản",
+        "thông báo, chỉ đạo về nhà ở xã hội",
+        "văn bản gửi các địa phương về giá và thủ tục"
+      ],
+      "cadence": "hằng tuần; bản công bố quý ra sau khi kết thúc quý khoảng 3-4 tuần"
+    },
+    {
+      "id": "sbv",
+      "name": "Ngân hàng Nhà nước Việt Nam",
+      "tier": "GOV",
+      "url": "https://www.sbv.gov.vn",
+      "verified_on": "2026-09-15",
+      "sections": {
+        "lai_suat": "Lãi suất NHNN quy định",
+        "tin_dung": "Dư nợ tín dụng đối với nền kinh tế",
+        "thong_cao": "Thông cáo báo chí"
+      },
+      "publishes": "Lãi suất điều hành, dư nợ tín dụng nền kinh tế, thông cáo báo chí về hoạt động ngân hàng.",
+      "watch_for": [
+        "thay đổi lãi suất điều hành",
+        "chỉ đạo về tín dụng bất động sản",
+        "quy định mới về cho vay mua nhà"
+      ],
+      "cadence": "hằng tuần"
+    },
+    {
+      "id": "nso",
+      "name": "Cục Thống kê (Bộ Tài chính)",
+      "tier": "STATS",
+      "url": "https://www.nso.gov.vn",
+      "verified_on": "2026-09-15",
+      "publishes": "CPI theo tháng/quý (có nhóm nhà ở và vật liệu xây dựng), chỉ số giá vàng và USD, thông cáo báo chí về tình hình giá.",
+      "watch_for": [
+        "CPI nhóm nhà ở và vật liệu xây dựng",
+        "số liệu thu nhập bình quân dùng để tính khả năng chi trả"
+      ],
+      "cadence": "hằng tháng, khoảng ngày 6 hằng tháng"
+    }
+  ],
+
+  "provincial_method": {
+    "note": "KHÔNG ghi sẵn URL Sở Xây dựng các tỉnh vào đây vì chưa xác minh từng cái. Khi chủ đề gắn với một địa bàn, tự tìm và mở thật trước khi dùng.",
+    "how": [
+      "Tìm: \"Sở Xây dựng <tỉnh/thành>\" site:.gov.vn",
+      "Tìm: \"cổng thông tin điện tử <tỉnh/thành>\" quy hoạch OR bảng giá đất",
+      "Mở thật trang đó, xác nhận là tên miền .gov.vn của đúng địa phương, rồi mới ghi vào evidence ledger"
+    ],
+    "watch_for": [
+      "bảng giá đất mới ban hành",
+      "quyết định phê duyệt quy hoạch",
+      "thông báo về thủ tục đăng ký đất đai tại địa phương"
+    ]
+  },
+
+  "signal_sources": {
+    "note": "Báo chí là TÍN HIỆU DẪN ĐƯỜNG, không phải nguồn cuối. Đọc để biết có sự kiện, rồi bắt buộc tìm về văn bản gốc mà bài báo nhắc tới. Nếu không tìm được văn bản gốc thì hạ mức chắc chắn của câu và ghi 'theo báo X ngày Y'.",
+    "domains": [
+      "vnexpress.net",
+      "tuoitre.vn",
+      "thanhnien.vn",
+      "cafef.vn",
+      "vietnamnet.vn",
+      "baochinhphu.vn"
+    ],
+    "search_patterns": [
+      "nghị định bất động sản mới nhất",
+      "bảng giá đất <tỉnh/thành> mới",
+      "lãi suất cho vay mua nhà",
+      "thủ tục sang tên sổ đỏ thay đổi",
+      "nhà ở xã hội điều kiện mua"
+    ]
+  },
+
+  "competitor_note": {
+    "text": "Batdongsan.com.vn và các trang đối thủ chỉ được đọc để hiểu intent và tìm khoảng trống. KHÔNG dùng làm nguồn cho bất kỳ dữ kiện nào, không mượn câu chữ, không clone outline, không lấy dữ liệu độc quyền hay ảnh."
+  },
+
+  "destination": {
+    "blog_root": "https://muaban.net/blog/",
+    "verified_on": "2026-09-15",
+    "real_estate_hub": "https://muaban.net/blog/nha-dat/",
+    "categories": {
+      "biet-thu": "https://muaban.net/blog/nha-dat/",
+      "can-ho": "https://muaban.net/blog/nha-dat/",
+      "chung-cu": "https://muaban.net/blog/nha-dat/",
+      "dat-dai": "https://muaban.net/blog/nha-dat/",
+      "nha-pho": "https://muaban.net/blog/nha-dat/",
+      "phong-tro": "https://muaban.net/blog/nha-dat/",
+      "van-phong": "https://muaban.net/blog/nha-dat/"
+    },
+    "article_url_pattern": "https://muaban.net/blog/<slug>-<id>/",
+    "inventory_check": "site:muaban.net/blog <truy vấn chính>",
+    "note": "Danh mục con (biệt thự, căn hộ, chung cư, đất đai, khách sạn, nhà phố, phòng trọ, văn phòng) hiển thị trong điều hướng của hub Nhà đất. Trước khi đặt internal link, mở thật URL đích và xác nhận nó đúng loại hình và địa bàn."
+  }
+}

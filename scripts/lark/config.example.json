@@ -1,0 +1,22 @@
+{
+  "title": "Content SEO — Bất động sản (Muaban.net)",
+  "app_token": "",
+  "base_url": "",
+  "tables": {
+    "pipeline": "",
+    "evidence": "",
+    "audit": "",
+    "guide": ""
+  },
+  "doc_folder_token": "",
+  "doc_folder_url": "",
+  "doc_layout": "type",
+  "doc_folders": {
+    "brief": "",
+    "outline": "",
+    "article": "",
+    "qa": ""
+  },
+  "notify_chat_id": "",
+  "notify_chat_name": ""
+}
