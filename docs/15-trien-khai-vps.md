@@ -22,7 +22,7 @@ có web server. Nó chỉ chủ động gọi ra Lark, WordPress `muaban.net/blo
 
 ```bash
 sudo apt update
-sudo apt install -y python3 git tmux unzip curl locales
+sudo apt install -y python3 python-is-python3 git tmux unzip curl locales
 
 # Node.js 20 LTS
 curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
@@ -32,6 +32,7 @@ sudo apt install -y nodejs
 | Gói | Phiên bản |
 |---|---|
 | Python | 3.10 trở lên (Ubuntu 24.04 có sẵn 3.12). **Không cần cài gói pip nào** |
+| `python-is-python3` | Để lệnh `python` chạy được. Ubuntu mặc định chỉ có `python3`, trong khi công cụ gọi `python` |
 | Node.js + npm | 20 LTS |
 | `git`, `tmux`, `unzip`, `curl`, `locales` | Bản của apt |
 
@@ -62,6 +63,9 @@ Cần **SSH access** vào VPS. IT hướng dẫn cách vào theo chuẩn của c
 |---|---|---|
 | Vào | **22/TCP** | SSH, theo chuẩn của công ty |
 | Vào | 80, 443 | **Không mở.** Không cần domain, reverse proxy hay HTTPS |
+
+Công cụ tự hỏi Lark Base mỗi 60 giây để biết bài nào vừa được duyệt, tức là kết nối do server mở ra ngoài; Lark không gọi ngược vào server. Vì vậy chiều vào chỉ cần SSH.
+
 | Ra | **443/TCP** | Mở ra internet |
 
 Chiều ra nên mở chung, vì agent phải tra văn bản pháp luật và nguồn chính thống trên nhiều trang khác
@@ -75,6 +79,10 @@ nhau. Nếu bắt buộc whitelist, các domain tối thiểu là:
 | `github.com`, `api.github.com` | Lấy mã nguồn (repo private) |
 | `registry.npmjs.org`, `deb.nodesource.com`, kho apt của Ubuntu | Cài gói |
 | `commons.wikimedia.org`, `upload.wikimedia.org`, `api.openverse.org` | Tìm ảnh có giấy phép |
+
+**WordPress chặn IP không?** Công cụ gọi REST API `https://muaban.net/blog/wp-json/` từ VPS để tạo bản nháp. Nếu site có tường lửa (Cloudflare, WAF, plugin bảo mật) chặn IP máy chủ hoặc chặn REST API, xin **whitelist IP của VPS** cho đường dẫn đó.
+
+**Vị trí đặt VPS:** Claude chỉ phục vụ ở các quốc gia Anthropic hỗ trợ. VPS đặt ở Việt Nam hoặc Singapore đều được.
 
 ## 6. Lưu trữ và sao lưu
 

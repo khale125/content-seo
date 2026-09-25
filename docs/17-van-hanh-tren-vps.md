@@ -117,8 +117,12 @@ Mở agent trong `tmux` để nó sống tiếp khi bạn thoát SSH:
 ```bash
 tmux new -s content          # lan dau
 tmux attach -t content       # nhung lan sau
-cd ~/apps/content-seo && claude
+cd ~/apps/content-seo && claude --permission-mode auto
 ```
+
+**Phải chạy với `--permission-mode auto`.** Không có cờ này, mỗi lần agent chạy một lệnh là nó dừng lại chờ người bấm cho phép, và trên VPS không có ai ngồi đó. Đây là chế độ bạn đang dùng trên máy mình. Đừng dùng `--dangerously-skip-permissions`: cờ đó tắt hết mọi kiểm soát, kể cả những lệnh nên hỏi lại.
+
+**Chi phí khi để agent trực liên tục.** Kênh theo dõi Lark hết hạn mỗi 29 phút và agent phải tự bật lại, mỗi lần như vậy là một lượt gọi đọc lại toàn bộ hội thoại. Để phiên chạy cả ngày thì hội thoại cứ dài thêm và mỗi lượt đắt dần. Nên mở phiên mới (`/clear`) sau khi xong mỗi bài, đúng như cách tiết kiệm token đã đo: chia phiên theo cổng duyệt rẻ hơn khoảng một nửa.
 
 Thoát ra mà để agent chạy tiếp: `Ctrl+B` rồi `D`. Lần đầu mở `claude`, bạn cần đăng nhập tài khoản
 Claude; làm giống cách đăng nhập Lark ở mục 4 nếu nó cần trình duyệt.
