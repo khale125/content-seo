@@ -28,6 +28,7 @@ project này chỉ lo **chất lượng nội dung và SEO**. Không có quyền
 | Rủi ro chính sách Google | `docs/06-chinh-sach-google.md` |
 | QA trước khi bàn giao | `docs/07-qa-va-ban-giao.md` |
 | Tìm ảnh cho bài, và đưa bản nháp lên WordPress (**bắt buộc**, xem quy tắc 19) | `docs/14-anh-va-ban-nhap-wordpress.md` |
+| Tìm ảnh trên internet, xem, chọn, ghi manifest và chèn vào bài | `.claude/skills/tim-anh-bds/SKILL.md` + `scripts/image_search.py` |
 | Đồng bộ và duyệt trên Lark | `docs/08-dong-bo-lark.md` |
 | Dựng dự án trên máy chủ (tài liệu cho đội IT, không phải quy tắc nội dung) | `docs/15-trien-khai-vps.md` |
 | Đưa repo lên GitHub, cài trên máy mới, làm việc chung trên một Base | `docs/16-dua-len-github.md` |
@@ -237,6 +238,15 @@ project này chỉ lo **chất lượng nội dung và SEO**. Không có quyền
     quy chuẩn này đã nằm trong `docs/05` và `docs/07` nhưng **không có chỗ nào đọc file manifest** —
     cùng loại lỗ hổng đã xảy ra với meta description và với schema. Chi tiết ở
     `docs/14-anh-va-ban-nhap-wordpress.md`.
+
+    **Ảnh từ internet đi qua skill `tim-anh-bds`**, công cụ `scripts/image_search.py`, nguồn
+    Wikimedia Commons và Openverse. Ba điều bắt buộc: (a) **mở từng ảnh ra xem** trước khi chọn —
+    tiêu đề trên kho không đáng tin; (b) ảnh **không được nói ngược lời khuyên** của bài, và chú
+    thích chỉ nói điều nhìn thấy trong ảnh hoặc điều mô tả gốc ghi — không gắn địa danh Việt Nam
+    cho ảnh chụp ở nước khác; (c) chỉ nhận **CC0, Public Domain, CC BY, CC BY-SA**. Ảnh có giấy phép
+    NC hoặc ND, hoặc ảnh CC BY thiếu tác giả, là `BLOCK`. Ghi công do `wp_draft.py` tự in dưới mỗi
+    ảnh CC BY; trước 25/09/2026 nó không in, tức là mọi ảnh CC BY đưa qua script đều vi phạm giấy
+    phép — người đăng bài **không được xoá dòng ghi công** trên WordPress.
 
 ## Quy trình
 

@@ -1,15 +1,15 @@
 # Báo cáo QA — 002 · chuon-chuon-bay-vao-nha
 
-Bản 0.2.9 · lập ngày 24/09/2026 · bài `UPDATE` cho URL đang đăng
+Bản 0.2.10 · cập nhật 25/09/2026 · bài `UPDATE` cho URL đang đăng
 `https://muaban.net/blog/chuon-chuon-bay-vao-nha-219339/`
 
 ## 1. Máy kiểm
 
 ```
 python scripts/run_qa.py work/chuon-chuon-bay-vao-nha/article.md
-→ PASS · BLOCK=0 · WARN=1 · 1.560 chữ thân bài
+→ PASS · BLOCK=0 · WARN=2 · 6 ảnh, 6/6 có chú thích, 6/6 CLEARED
 python scripts/house_voice_check.py
-→ 0 chỉ số lệch trên 18 (kho 24 bài thật: lệch trung vị 4, nhiều nhất 9)
+→ 0 chỉ số lệch (kho 24 bài thật: lệch trung vị 3, nhiều nhất 11)
 python scripts/outline_check.py / serp_outline.py check
 → 0 BLOCK ở cả hai
 ```
@@ -192,12 +192,56 @@ permalink của blog là `/blog/<slug>-<post_id>/`, nên đoạn cuối URL khô
 sống tìm theo `chuon-chuon-bay-vao-nha-219339`, không thấy gì, nên chốt im lặng. Đã sửa: cắt đuôi
 `-<id>` trước khi tra, và thử cả hai dạng. Thử lại thì chốt nổ đúng, kèm hai lựa chọn cho người thật.
 
+## 1k. Ảnh từ internet (0.2.9 → 0.2.10)
+
+Chủ dự án yêu cầu một luồng tìm ảnh trên internet và chèn vào chính bài này. Sáu ảnh, tất cả từ
+**Wikimedia Commons**, tất cả được mở ra xem trước khi chọn. Ba ảnh chụp **ở Việt Nam** (TP.HCM,
+Bến Tre), vì tìm bằng tên khoa học kèm "Vietnam" trước.
+
+| Vị trí | Ảnh | Nơi chụp | Giấy phép · tác giả |
+|---|---|---|---|
+| Đầu bài, trước mục I | Chuồn chuồn đậu trên bệ cửa sổ, phía trong nhà | Đan Mạch | CC BY 2.0 · Armin Wolfermann |
+| Mục II, trước II.1 | Chuồn chuồn xanh (*Orthetrum sabina*) trên chậu xương rồng | **TP.HCM** | CC BY-SA 3.0 · Diego Delso |
+| Cuối mục II.3 | Chuồn chuồn cái chạm đuôi xuống mặt nước để đẻ trứng | Đức | CC BY-SA 4.0 · Andreas Eichler |
+| Cuối mục III.1 | Chuồn chuồn kim xanh (*Pseudagrion microcephalum*) | **Bến Tre** | CC BY-SA 4.0 · Charles J. Sharp |
+| Cuối mục IV | Chuồn chuồn ớt **cái**, thân vàng rực | **Bến Tre** | CC BY-SA 4.0 · Charles J. Sharp |
+| Cuối mục IV | Chuồn chuồn ớt **đực**, đỏ từ mắt tới đuôi | Ấn Độ | CC BY-SA 4.0 · Charles J. Sharp |
+
+Chú thích ảnh nào cũng chỉ nói điều **nhìn thấy trong ảnh** hoặc điều **trang gốc ghi**. "Ảnh chụp ở
+Bến Tre" có vì trang Commons ghi vậy; ảnh chụp ở Ấn Độ và Đức thì chú thích tả con vật và bỏ phần địa
+điểm. Hai ảnh ở mục IV đặt cạnh nhau có chủ ý: cùng một loài mà con cái vàng, con đực đỏ — khớp với
+câu mở mục IV rằng màu sắc là đặc điểm của loài chứ không phải tín hiệu gửi riêng cho gia chủ.
+
+**Ứng viên đã loại, ghi lại để người duyệt biết đã cân nhắc gì:**
+
+- **Chuồn chuồn đậu trên ngón tay** — ảnh đẹp, nét, nhưng mục VI và câu hỏi thường gặp số 3 khuyên
+  *không cầm chuồn chuồn trong tay* vì cánh dễ rách. Đặt ảnh đó vào là nói ngược lời khuyên của bài.
+- **Nhà ven kênh ở đồng bằng sông Cửu Long** — trang gốc mô tả là "nhà kiểu ổ chuột". Dùng ảnh đó
+  minh họa "nhà gần nguồn nước" dễ bị đọc thành coi thường người đọc sống ven kênh.
+- **Máng xối nhỏ giọt** cho mục VI — không cho thấy chỗ nước đọng mà đoạn văn đang nói tới.
+- **"Leaf Window"** — kết quả cho từ khoá "dragonfly window", thực ra là chuồn chuồn đậu sau một
+  chiếc lá thủng. Ví dụ rõ nhất vì sao phải mở ảnh ra xem.
+
+**Ghi công:** cả sáu ảnh đều là CC BY hoặc CC BY-SA, **bắt buộc** ghi tác giả, nguồn và giấy phép.
+Làm bước này thì lộ ra `wp_draft.py` trước nay **không in dòng ghi công nào**, tức là đưa ảnh CC BY qua
+script là vi phạm giấy phép của ảnh. Đã sửa: dưới mỗi ảnh nay có dòng
+`Ảnh: <tác giả> / Wikimedia Commons, <giấy phép>`, tên tác giả và giấy phép là liên kết `nofollow`.
+
+**Hai lỗi máy kiểm lộ ra khi bài lần đầu có ảnh thật, đã sửa:**
+
+1. `onpage_check` báo "6/6 ảnh không có caption" vì chỉ nhìn đúng một dòng dưới ảnh, trong khi khuôn
+   của chính dự án có một dòng trống ở giữa.
+2. Bộ đo giọng văn đếm 6 dòng chú thích như 6 đoạn văn, kéo độ dài đoạn trung bình xuống dưới dải bài
+   thật và đẩy số câu mở bằng "chuồn chuồn" lên 9. Kho bài thật lưu chú thích bằng dòng `[CAPTION]`
+   và đã bỏ chúng khi đo, nên nay bài của mình cũng bỏ. Đo lại cả kho 24 bài: **153/153 chỉ số không
+   đổi**, tức là không ngưỡng nào bị nới.
+
 ## 2. Giải trình cảnh báo
 
 | Cảnh báo | Số lần | Giải trình |
 |---|---|---|
 | `substance` — chỉ 10% câu có số cụ thể | 1 | Bài điềm báo dân gian không có số liệu để dẫn ngoài ba claim khoa học. Tỷ lệ này giảm thêm sau khi gỡ ngày cập nhật khỏi sapo theo góp ý. Không bịa thêm số để nâng chỉ số. |
-| `images` — bài không có ảnh nào | 1 | **Chưa xử lý được ở bước này.** Image plan trong outline có 8 ảnh, trong đó 5 ảnh là sơ đồ tự dựng. Tôi không có công cụ dựng ảnh, nên ảnh phải do người thật làm trước khi đăng. Xem mục 6. |
+| `section_length` — mục IV dài 260 chữ, vượt 230 | 1 | Phần **văn xuôi** của mục IV là **227 chữ**, dưới ngưỡng; 33 chữ còn lại là hai dòng chú thích ảnh. Tôi không bỏ ảnh chỉ để hết cảnh báo, vì hai ảnh đó là cặp đối chiếu vàng–đỏ của cùng một loài. Tôi cũng không đổi cách máy đếm: chú thích có tính vào 230 chữ hay không là chuyện của quy chuẩn, để người duyệt quyết. |
 
 ## 3. Ba điều đã xử lý riêng cho chủ đề ngoài phạm vi bất động sản
 
@@ -254,10 +298,10 @@ Hai điều đáng ghi lại cho bài sau:
 
 ## 6. Câu hỏi mở
 
-1. **Ảnh chưa có.** Image plan có 8 ảnh, 5 trong số đó là sơ đồ tự dựng: ba bề mặt phản xạ ánh sáng
-   ở mục II, bảng màu sắc ở mục IV, ba bước đưa chuồn chuồn ra ngoài ở mục VI, các chỗ đọng nước ở
-   mục VI, và ảnh chuồn chuồn kim cạnh chuồn chuồn thường. Cần người dựng ảnh hoặc cấp quyền cho
-   một công cụ tạo ảnh.
+1. **Mục VI chưa có ảnh.** Đã tìm ảnh các chỗ đọng nước quanh nhà (khay máy lạnh, chậu cây, máng
+   xối) nhưng không ảnh nào cho thấy rõ điều đoạn văn nói. Hai sơ đồ trong image plan — ba bề mặt
+   phản xạ ánh sáng ở mục II, ba bước đưa chuồn chuồn ra ngoài ở mục VI — vẫn là loại ảnh tốt nhất
+   cho hai chỗ đó, nhưng phải do người dựng. Bài hiện đủ 6 ảnh, trong dải 6–10 của bài thật.
 2. **Bài cũ có 6 ảnh.** Khi cập nhật, cân nhắc giữ lại ảnh cũ nếu vẫn đúng nội dung, thay vì dựng
    mới toàn bộ.
 3. **Tục ngữ "chuồn chuồn bay thấp thì mưa"** đang là `PARTIAL`: các trang tra được đều là trang
@@ -271,15 +315,18 @@ Hai điều đáng ghi lại cho bài sau:
 | Việc | Chi tiết cho bài này |
 |---|---|
 | Thuộc tính liên kết ngoài | Hai URL ngoài, dùng ở mục II và khối Căn cứ: `pmc.ncbi.nlm.nih.gov` và `smithsonianmag.com`. Cả hai gắn `target="_blank" rel="nofollow noopener"`. Không có liên kết tài trợ |
-| Bộ schema | `BlogPosting` + `BreadcrumbList` + `FAQPage` (bài có mục VIII hỏi đáp), chèn ở `<head>`. Thêm `ImageObject` sau khi có ảnh |
+| Bộ schema | `BlogPosting` + `BreadcrumbList` + `FAQPage` (bài có mục VIII hỏi đáp) + `ImageObject` (bài có 6 ảnh), chèn ở `<head>` |
+| **Ghi công ảnh — không được xoá** | Cả 6 ảnh là CC BY / CC BY-SA. `wp_draft.py` tự in dưới mỗi ảnh một dòng `Ảnh: <tác giả> / Wikimedia Commons, <giấy phép>`. Xoá hoặc rút gọn dòng đó khi sửa bài là vi phạm giấy phép của ảnh. Nếu dán thủ công vào bài 219339, chép luôn dòng ghi công từ `image-manifest.csv` |
 | Làm sạch code | Bản thảo là Markdown thuần. Sau khi dán vào trình soạn thảo, gỡ CSS inline mà nó tự sinh |
 | Mốc rà Content Gap | **Ngày đăng + 3 tháng** |
 | Riêng bài UPDATE | Giữ nguyên URL `chuon-chuon-bay-vao-nha-219339`, cập nhật nội dung vào chính bài đó, và **đổi ngày cập nhật** vì nội dung thật sự đổi |
 
 ## 7. Checklist trước khi đăng
 
-- [ ] Dựng 8 ảnh theo image plan, ghi `image-manifest.csv`, đặt `rights_status = CLEARED`
-- [ ] Quyết định giữ hay bỏ ảnh cũ của bài đang đăng
+- [x] Tìm 6 ảnh có giấy phép, ghi `image-manifest.csv`, cả 6 `CLEARED`
+- [ ] Nhìn lại 6 ảnh trong `images/` và xác nhận chú thích đúng với từng ảnh
+- [ ] Giữ nguyên dòng ghi công dưới mỗi ảnh khi đăng
+- [ ] Quyết định giữ hay bỏ ảnh cũ của bài đang đăng, và có dựng thêm hai sơ đồ ở mục II và VI không
 - [ ] Mở thử hai liên kết ngoài và hai liên kết nội bộ
 - [ ] Đọc lại mục VII và xác nhận khung không cờ bạc đã đủ rõ với biên tập
 - [ ] Đối chiếu bản mới với bài cũ xem có ý nào đáng giữ mà bản này đã cắt

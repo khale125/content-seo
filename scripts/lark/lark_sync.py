@@ -485,8 +485,12 @@ def gate_status(values: dict) -> dict:
 
 
 def derive_state(values: dict, qa: dict, has_outline: bool, has_article: bool,
-                 url_decision: str) -> str:
-    """Trang thai moi = trang thai cu + cong da mo hay chua + artifact da co hay chua."""
+                 url_decision: str, changed: bool = False) -> str:
+    """Trang thai moi = trang thai cu + cong da mo hay chua + artifact da co hay chua.
+
+    `changed`: noi dung da doi so voi lan push truoc. Bai da qua cong bai ma con sua
+    thi phe duyet cu khong con noi ve ban hien tai, nen phai quay ve cong bai.
+    """
     if url_decision.strip().upper() == "SKIP":
         return "SKIPPED"
 
@@ -506,8 +510,15 @@ def derive_state(values: dict, qa: dict, has_outline: bool, has_article: bool,
 
     if prev == "DRAFTING":
         return "ARTICLE_PENDING" if (has_article and qa.get("status") == "PASS") else "DRAFTING"
+    # Bai da duyet ma con sua -> ve lai cong bai. Truoc day DONE va WP_DRAFTED la trang
+    # thai cuoi tuyet doi, nen sua bai sau khi duyet roi push thi trang thai giu nguyen,
+    # `gate` tra exit 0 vi "khong phai cong", va wp_draft.py, von tin exit 0 do, se
+    # dua ban CHUA DUYET len WordPress. Lo ra khi chen anh vao bai 002 sau khi da len
+    # ban nhap. Day dung la dieu quy tac 10 cam: chi nguoi that duyet dung ban hien tai.
+    if prev in ("DONE", "WP_DRAFTED") and changed:
+        return "ARTICLE_PENDING" if (has_article and qa.get("status") == "PASS") else "DRAFTING"
     if prev in ("DONE", "SKIPPED", "WP_DRAFTED"):
-        return prev            # ba trang thai cuoi: push sau khong keo nguoc ve cong
+        return prev            # ba trang thai cuoi: push KHONG doi noi dung thi giu nguyen
 
     # Dang nghien cuu: co outline roi thi len cong duyet outline.
     if prev == "RESEARCHING":
@@ -701,7 +712,8 @@ def cmd_push(workdir: str, cfg: dict, force_bump: bool) -> int:
     has_article = substantive(workdir, "article.md", 400)
     url_decision = str(brief.get("url_decision") or "")
 
-    new_state = derive_state(existing, qa, has_outline, has_article, url_decision)
+    new_state = derive_state(existing, qa, has_outline, has_article, url_decision,
+                             changed=content_changed or force_bump)
 
     # Tai lieu cho nguoi duyet
     targets = doc_targets(cfg, content_id, os.path.basename(workdir), state)

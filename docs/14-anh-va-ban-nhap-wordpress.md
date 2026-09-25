@@ -79,10 +79,64 @@ kiểu "Ảnh minh họa" hay "Nguồn: Internet".
 | Manifest thiếu `source_url`, `license`, `alt_text` hay `caption` | `WARN` |
 | Ảnh thiếu alt, alt nhồi từ khóa, ảnh không có chú thích | `WARN` / `BLOCK` (đã có từ trước) |
 | Số ảnh dưới 6, hoặc chú thích ngoài 7–20 từ | ghi chú (`INFO`) |
+| Ảnh internet có giấy phép NC, ND, GFDL đơn lẻ hoặc không nhận ra được | **`BLOCK`** |
+| Ảnh CC BY / CC BY-SA thiếu `creator` hoặc `license_url` — không ghi công được | **`BLOCK`** |
 
-Hai mức `BLOCK` ở đây là mới từ 24/09/2026. Trước đó `docs/05` và `docs/07` đã đòi mọi ảnh phải có
+Hai mức `BLOCK` đầu là mới từ 24/09/2026. Trước đó `docs/05` và `docs/07` đã đòi mọi ảnh phải có
 manifest và có bản quyền rõ ràng, nhưng **không có chỗ nào đọc file manifest** — cùng loại lỗ hổng
-đã xảy ra với meta description và với schema.
+đã xảy ra với meta description và với schema. Hai mức `BLOCK` cuối là từ 25/09/2026, cùng lúc với
+mục A6.
+
+### A6. Tìm ảnh trên internet
+
+Mục A2 đã cho phép Wikimedia Commons và Openverse từ đầu, nhưng dự án **không có công cụ** nào để
+dùng chúng, nên bài đầu ra không có ảnh. Công cụ nay là `scripts/image_search.py`, còn phương pháp
+nằm ở skill `tim-anh-bds`.
+
+```powershell
+python scripts/image_search.py search "<danh từ cụ thể, tiếng Anh>" --slug <slug> --source commons
+python scripts/image_search.py fetch <cxxx> --slug <slug> --position <hero|body-N> `
+  --name <ten-file.jpg> --alt "..." --caption "..." --purpose "..."
+```
+
+**Hai nguồn và vì sao chọn chúng.** Cả hai trả về giấy phép, tác giả và trang gốc bằng dữ liệu máy
+đọc được, nên manifest được ghi đủ mà không phải chép tay. Unsplash và Pexels cần khóa API, và giấy
+phép riêng của họ không mang tên tác giả vào dữ liệu theo cách thống nhất; dùng tay vẫn được theo
+A2, nhưng không nằm trong công cụ.
+
+| Nguồn | Vai trò | Khi nào `CLEARED` |
+|---|---|---|
+| Wikimedia Commons | Nguồn chính. Giấy phép do cộng đồng kiểm, mô tả thường ghi rõ loài và nơi chụp | Ngay khi tải, nếu giấy phép nằm trong danh sách nhận |
+| Openverse | Nguồn phụ, gom từ Flickr và nơi khác | Chỉ sau khi người tìm mở trang gốc xác nhận giấy phép, rồi chạy lại với `--verified` |
+
+**Giấy phép nhận:** CC0, Public Domain, CC BY, CC BY-SA. **Loại:** NC vì blog là trang thương mại;
+ND vì WordPress tự cắt ảnh thành nhiều cỡ, tức là tạo bản phái sinh; GFDL đơn lẻ vì phải kèm cả văn
+bản giấy phép; và CC BY mà không rõ tác giả, vì không ghi công được thì không tuân thủ được.
+
+**Ghi công là việc của máy, không phải của người đăng bài.** `wp_draft.py` tự in dưới mỗi ảnh
+CC BY / CC BY-SA một dòng `Ảnh: <tác giả> / <nguồn>, <giấy phép>`, trong đó tên tác giả và giấy phép
+đều là liên kết `nofollow`. Nó ghi cả dòng đó vào chú thích của ảnh trong thư viện Media. Trước
+25/09/2026 `<figcaption>` chỉ mang chú thích, nên đưa ảnh CC BY qua script là vi phạm chính giấy
+phép của ảnh. Lỗ hổng này lộ ra khi bài 002 lần đầu lấy ảnh từ Wikimedia.
+
+**Bốn điều rút ra từ lần làm bài 002:**
+
+1. **Phải mở ảnh ra xem.** Tìm "dragonfly window" trả về cả một file tên "Leaf Window" chụp một
+   chiếc lá thủng. Tiêu đề và tag trên kho không đáng tin; `search` tải ảnh xem trước để nhìn.
+2. **Ảnh không được nói ngược lời khuyên của bài.** Ảnh chuồn chuồn đậu trên ngón tay bị loại vì bài
+   khuyên không cầm con vật trong tay.
+3. **Thêm "Vietnam" hoặc tên địa phương vào từ khoá.** "Orthetrum sabina Vietnam" trả về ảnh chụp ở
+   TP.HCM, "Crocothemis servilia Vietnam" trả về ảnh chụp ở Bến Tre. Ảnh đúng bối cảnh luôn hơn ảnh
+   đẹp chụp ở châu Âu.
+4. **Chú thích chỉ nói điều nhìn thấy hoặc điều mô tả gốc ghi.** Ghi "ảnh chụp ở Bến Tre" vì trang
+   Commons ghi vậy; ảnh chụp ở Ấn Độ thì chú thích tả con vật và bỏ phần địa điểm.
+
+**Chú thích ảnh và phép đo giọng văn.** Kho bài thật lưu ảnh bằng dòng `[CAPTION]`, và phép đo đã
+bỏ các dòng đó từ đầu. Bài đang viết dùng khuôn `![alt](...)` rồi `*chú thích*`, nên
+`house_voice_profile.is_figure_caption()` bỏ dòng chú thích nằm ngay dưới ảnh để hai bên đo cùng
+một thứ. Đo lại cả kho sau khi sửa: 153/153 chỉ số không đổi. Nhưng chú thích **vẫn tính** vào giới
+hạn 230 chữ mỗi mục. Mục văn xuôi đã sát ngưỡng thì giải trình kèm số chữ văn xuôi thật, đừng bỏ ảnh
+chỉ để hết cảnh báo.
 
 ---
 

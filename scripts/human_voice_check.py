@@ -94,7 +94,12 @@ def check_lexicon(doc, lex, report: Report) -> None:
 
 
 def check_rhythm(doc, report: Report) -> None:
-    prose_blocks = [b for b in doc.blocks if b.kind in ("paragraph", "quote")]
+    # Bo dong chu thich anh: nguong MAX_SAME_OPENER do tren kho bai that, noi chu
+    # thich chi con la dong `[CAPTION]` va khong bao gio thanh "cau mo bang ...".
+    # Dung chung ham voi house_voice_profile de hai may kiem khong lech nhau ve sau.
+    from house_voice_profile import is_figure_caption
+    prose_blocks = [b for b in doc.blocks if b.kind in ("paragraph", "quote")
+                    and not is_figure_caption(doc, b)]
     prose = "\n".join(b.text for b in prose_blocks)
     sentences = [s for s in split_sentences(prose) if word_count(s) >= 2]
 

@@ -558,10 +558,31 @@ def check_toc_and_captions(doc, report: Report) -> None:
     images = [l for l in collect_links(doc) if l[3]]
     if images:
         captioned = 0
+
+        # Khuon cua du an (docs/14 muc A4, skill seo-writer-bds) dat MOT DONG TRONG giua
+        # anh va chu thich in nghieng. Truoc day ham nay chi nhin dung dong ke ben, nen
+        # bao "6/6 anh khong co caption" tren chinh bai viet dung khuon — lo ra lan dau
+        # tien bai 002 co anh that. Bo qua dong trong, toi da hai dong.
+        def near(lineno: int, step: int) -> str:
+            i = lineno - 1 + step
+            for _ in range(3):
+                if not 0 <= i < len(doc.lines):
+                    return ""
+                if doc.lines[i].strip():
+                    return doc.lines[i]
+                i += step
+            return ""
+
+        # Chi nhin XUONG khi bo qua dong trong: nhin len se vo phai chu thich cua anh
+        # dung truoc, hoac mot doan van co chu in dam, roi tinh nham la co caption.
+        # Dong ke ben phia tren thi van nhan nhu cu, de bai cu khong doi ket qua.
+        whole_italic = re.compile(r"^\s*(\*[^*\s].*[^*\s]\*|_[^_\s].*[^_\s]_|>.+)\s*$")
         for _, _, lineno, _ in images:
-            nxt = doc.lines[lineno] if lineno < len(doc.lines) else ""
+            nxt = near(lineno, +1)
             prv = doc.lines[lineno - 2] if lineno >= 2 else ""
-            if re.search(r"(\*.+\*|_.+_|^\s*>|caption|chú thích)", nxt + " " + prv, re.I):
+            if whole_italic.match(nxt) or \
+                    re.search(r"(\*.+\*|_.+_|^\s*>|caption|chú thích)", prv, re.I) or \
+                    re.search(r"(caption|chú thích)", nxt, re.I):
                 captioned += 1
         report.metrics["anh co caption"] = f"{captioned}/{len(images)}"
         if captioned < len(images):
@@ -1040,6 +1061,30 @@ def check_image_manifest(doc, article_path: str, report: Report) -> None:
             if not (row.get(col) or "").strip():
                 report.add("images", WARN, f"Anh {name} thieu cot '{col}' trong manifest.",
                            line=lineno)
+
+        # Anh lay tu internet: giay phep phai cho dung thuong mai va cho thay doi kich
+        # thuoc, va neu la CC BY / BY-SA thi phai du thong tin de ghi cong. Hai dieu nay
+        # khong the "giai trinh" duoc — dung sai la vi pham giay phep cua anh, nen BLOCK.
+        # Anh tu dung va anh cua Muaban.net khong co source_url ben ngoai, nen bo qua.
+        src = (row.get("source_url") or "").strip().lower()
+        if src.startswith("http") and "muaban.net" not in src:
+            from image_search import classify_license, needs_attribution
+            group, why = classify_license(row.get("license") or "")
+            if group is None:
+                report.add("images", BLOCK, f"Anh {name}: giay phep khong dung duoc ({why}).",
+                           line=lineno,
+                           guidance="Blog la trang thuong mai va WordPress tu cat anh thanh "
+                                    "nhieu co. Chi nhan CC0, Public Domain, CC BY, CC BY-SA.")
+            elif needs_attribution(group):
+                missing = [c for c in ("creator", "license_url")
+                           if not (row.get(c) or "").strip()]
+                if missing:
+                    report.add("images", BLOCK,
+                               f"Anh {name} la {row.get('license')} nhung thieu "
+                               f"{', '.join(missing)} de ghi cong.",
+                               line=lineno,
+                               guidance="CC BY bat buoc ghi tac gia, nguon va giay phep. "
+                                        "wp_draft.py in dong ghi cong tu chinh cac cot nay.")
         cap_words = word_count((row.get("caption") or "").strip())
         if cap_words and not (CAPTION_WORDS_MIN <= cap_words <= CAPTION_WORDS_MAX):
             report.add("images", INFO,

@@ -247,6 +247,11 @@ manifest cho mỗi ảnh với `rights_status = CLEARED`, rồi chèn kèm chú 
 Ảnh không có dòng manifest, hoặc dòng chưa `CLEARED`, là `BLOCK`. **Ảnh AI dựng để minh họa một địa
 điểm hay giấy tờ có thật là vi phạm quy tắc 1.** Cách tìm ảnh: `docs/14-anh-va-ban-nhap-wordpress.md`.
 
+**Ảnh từ internet: gọi skill `tim-anh-bds`** sau khi bài đã qua lượt giọng nhà, vì chú thích phải
+viết theo đúng đoạn văn đã chốt. Skill đó tìm trên Wikimedia Commons và Openverse, **mở từng ảnh ra
+xem** trước khi chọn, loại ảnh nói ngược lời khuyên của bài, rồi ghi manifest và chèn ảnh. Ảnh
+CC BY / CC BY-SA được `wp_draft.py` tự ghi công dưới ảnh — đừng tự thêm dòng "Ảnh: ..." vào bài.
+
 Schema chỉ khai báo khi **khớp nội dung hiển thị**. Không gắn `author` cho người chưa xác minh.
 Khai vào `schema` và `schema_extra` của front matter: **`BlogPosting` + `BreadcrumbList`** (24/24 bài
 thật, không dùng `Article`), thêm `ImageObject` khi bài có ảnh và `FAQPage` khi bài có mục hỏi đáp.

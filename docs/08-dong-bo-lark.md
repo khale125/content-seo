@@ -119,6 +119,18 @@ Nghĩa là bạn luôn duyệt đúng thứ đang nằm trước mặt, và khô
 Cả payload và việc xóa trắng đi trong **một** lệnh cập nhật bản ghi, nên không có khoảnh khắc nào
 bản ghi mang trạng thái mới mà vẫn còn phê duyệt cũ.
 
+## Sửa bài sau khi đã duyệt: quay về cổng bài
+
+"Đã xong" và "Đã lên nháp WordPress" là trạng thái cuối **chỉ khi nội dung không đổi**. Push một bản
+có nội dung khác (hoặc push với `--bump`) thì bài quay về **Chờ duyệt bài**, cụm duyệt bị xoá trắng,
+và `gate` trả exit 1 cho tới khi người thật duyệt lại.
+
+Trước 25/09/2026 hai trạng thái đó là cuối tuyệt đối. Chèn ảnh vào bài 002 sau khi đã lên bản nháp
+rồi push thì bài vẫn ghi "Đã lên nháp WordPress · Bạn đọc bản nháp rồi đăng", `gate` trả **exit 0**
+vì "không phải cổng", và `wp_draft.py` — vốn tin đúng exit 0 đó — sẵn sàng đưa bản **chưa ai duyệt**
+lên WordPress. Đó là lỗ hổng của quy tắc 10, không phải lỗi hiển thị. `derive_state` nay nhận cờ
+`changed` và kéo bài về cổng bài.
+
 ## Sửa schema rồi `--rebuild`: hai điều đã trả giá để biết
 
 `--rebuild` **thuần thêm** — nó không xoá bảng, không xoá trường, không xoá option. Nhưng hai chỗ

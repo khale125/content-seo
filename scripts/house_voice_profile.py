@@ -134,6 +134,32 @@ BOLD_RE = re.compile(r"\*\*([^*]+)\*\*")
 # dich thuong ket bang dau hoi — de no lot vao phep do thi chi so "cau hoi trong than
 # bai" bi day len oan. Loai o CA kho lan bai dang viet, roi do lai toan kho.
 SEE_ALSO_RE = re.compile(r"^\s*(\*\*)?\s*xem thêm\s*:?", re.I)
+IMAGE_LINE_RE = re.compile(r"^\s*!\[[^\]]*\]\([^)]*\)\s*$")
+ITALIC_LINE_RE = re.compile(r"^\s*(\*[^*\s].*[^*\s]\*|_[^_\s].*[^_\s]_)\s*$")
+
+
+def is_figure_caption(doc, block) -> bool:
+    """Khoi nay la dong chu thich `*...*` nam ngay duoi mot dong anh `![...](...)`.
+
+    Kho bai that luu anh bang dong `[CAPTION] ...` va khong co dong anh nao, nen phep
+    do tren kho da BO chu thich. Bai dang viet dung khuon Markdown, va khong bo dong
+    chu thich thi bai minh bi do KEM chu thich con bai that thi khong — 6 dong chu
+    thich ngan da keo do dai doan trung binh cua bai 002 xuong duoi dai bai that.
+
+    Phai doc DONG GOC qua `doc.lines`: `parse_markdown` go dinh dang truoc khi tao
+    khoi, nen `block.text` da mat dau `*`, con dong anh thi khong thanh khoi nao ca.
+    Kho bai that khong co dong nao khop, nen nguong da do khong doi (153/153 chi so).
+    """
+    lines = getattr(doc, "lines", None)
+    ln = getattr(block, "line", 0)
+    if not lines or not 0 < ln <= len(lines):
+        return False
+    if not ITALIC_LINE_RE.match(lines[ln - 1]):
+        return False
+    i = ln - 2
+    while i >= 0 and not lines[i].strip():
+        i -= 1
+    return i >= 0 and bool(IMAGE_LINE_RE.match(lines[i]))
 
 
 def prose_blocks(doc):
@@ -144,6 +170,8 @@ def prose_blocks(doc):
     out = []
     for b in doc.blocks:
         if b.kind != "paragraph":
+            continue
+        if is_figure_caption(doc, b):
             continue
         if CAPTION_RE.match(b.text):
             continue

@@ -9,6 +9,9 @@ work/*/qa-report.json
 examples/*/qa-report.json
 wiki/lint-report.json
 
+# Anh xem truoc khi tim anh — chi de agent nhin, khong phai tai san cua bai
+work/*/images/_preview/
+
 # Trang thai rieng cua tung may, khong chia se duoc
 work/.lark-watch.json
 work/.lark-watch.json.tmp

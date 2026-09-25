@@ -40,6 +40,7 @@ import re
 import subprocess
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -263,7 +264,13 @@ def md_to_html(body_lines: list[str], media: dict[str, dict]) -> str:
         # Trong ban thao, chu thich anh viet thanh mot dong in nghieng ngay duoi anh
         # (do la cach `onpage_check` nhan ra caption). Tren WordPress thi chu thich da
         # nam trong <figcaption> lay tu manifest, nen bo dong nay di cho khoi lap.
+        # Khuon cua du an co MOT DONG TRONG giua anh va chu thich (docs/14 muc A4), nen
+        # giu co cho toi dong khong trong dau tien. Truoc day co bi xoa ngay o dong trong,
+        # va moi chu thich hien HAI lan tren WordPress: trong <figcaption> va thanh mot
+        # doan <p><em> ngay duoi — lo ra khi bai 002 lan dau co anh that.
         if skip_next_caption:
+            if not stripped:
+                continue
             skip_next_caption = False
             if re.fullmatch(r"\*[^*]+\*|_[^_]+_", stripped):
                 continue
@@ -296,8 +303,12 @@ def md_to_html(body_lines: list[str], media: dict[str, dict]) -> str:
             cap = (item or {}).get("caption", "")
             fig = f'<figure class="wp-block-image size-large">' \
                   f'<img src="{url}" alt="{html.escape(alt)}" />'
-            if cap:
-                fig += f"<figcaption>{html.escape(cap)}</figcaption>"
+            credit = (item or {}).get("credit", "")
+            if cap or credit:
+                parts = [html.escape(cap)] if cap else []
+                if credit:
+                    parts.append(credit)
+                fig += f"<figcaption>{'<br />'.join(parts)}</figcaption>"
             out.append(fig + "</figure>")
             skip_next_caption = True
             continue
@@ -332,6 +343,39 @@ def md_to_html(body_lines: list[str], media: dict[str, dict]) -> str:
 
 # ------------------------------------------------------------------ chay
 
+CREDIT_SITES = {"commons.wikimedia.org": "Wikimedia Commons", "www.flickr.com": "Flickr",
+                "flickr.com": "Flickr", "unsplash.com": "Unsplash", "www.pexels.com": "Pexels"}
+
+
+def credit_parts(row: dict) -> tuple[str, str]:
+    """Tra ve (html, van ban thuong) cua dong ghi cong, hoac ("", "") neu khong can.
+
+    CC BY va CC BY-SA BAT BUOC ghi tac gia, nguon va giay phep o noi anh xuat hien.
+    Truoc day figcaption chi mang chu thich, nen dung anh CC BY qua script nay la vi
+    pham chinh giay phep cua anh — lo ra khi bai 002 lan dau lay anh tu Wikimedia.
+    CC0, Public Domain va anh tu dung thi khong bat buoc, nen khong in.
+    """
+    lic = (row.get("license") or "").strip()
+    if not re.search(r"\bBY\b", lic.upper()):
+        return "", ""
+    creator = (row.get("creator") or "").strip()
+    src = (row.get("source_url") or "").strip()
+    lurl = (row.get("license_url") or "").strip()
+    host = urllib.parse.urlparse(src).netloc.lower()
+    site = CREDIT_SITES.get(host, host)
+
+    def link(href: str, text: str) -> str:
+        if not href:
+            return html.escape(text)
+        return (f'<a href="{html.escape(href)}" target="_blank" '
+                f'rel="nofollow noopener">{html.escape(text)}</a>')
+
+    via = f" / {html.escape(site)}" if site else ""
+    as_html = f"Ảnh: {link(src, creator)}{via}, {link(lurl, lic)}"
+    as_text = f"Ảnh: {creator}{(' / ' + site) if site else ''}, {lic}"
+    return as_html, as_text
+
+
 def upload_images(folder: str, rows: list[dict], auth: str,
                   dry: bool) -> dict[str, dict]:
     media: dict[str, dict] = {}
@@ -343,6 +387,7 @@ def upload_images(folder: str, rows: list[dict], auth: str,
         if dry:
             media[name] = {"id": 0, "source_url": f"(chua tai) {name}",
                            "caption": (row.get("caption") or "").strip(),
+                           "credit": credit_parts(row)[0],
                            "position": (row.get("position") or "").strip()}
             continue
         ctype = mimetypes.guess_type(name)[0] or "application/octet-stream"
@@ -351,12 +396,17 @@ def upload_images(folder: str, rows: list[dict], auth: str,
         item = call("POST", API + "/media", auth, data=blob, content_type=ctype,
                     extra={"Content-Disposition": f'attachment; filename="{name}"'})
         # alt va caption la bat buoc cua du an, nen ghi ngay sau khi tai len.
+        credit_html, credit_text = credit_parts(row)
+        cap_plain = (row.get("caption") or "").strip()
         post_json(f"{API}/media/{item['id']}", auth, {
             "alt_text": (row.get("alt_text") or "").strip(),
-            "caption": (row.get("caption") or "").strip(),
+            # Thu vien Media cung phai mang ghi cong: anh co the duoc chen lai vao
+            # bai khac tu thu vien, luc do khong con figcaption cua bai nay.
+            "caption": f"{cap_plain} — {credit_text}" if credit_text else cap_plain,
         })
         media[name] = {"id": item["id"], "source_url": item["source_url"],
-                       "caption": (row.get("caption") or "").strip(),
+                       "caption": cap_plain,
+                       "credit": credit_html,
                        "position": (row.get("position") or "").strip()}
         print(f"  [WP] da tai anh {name} -> media #{item['id']}")
     return media

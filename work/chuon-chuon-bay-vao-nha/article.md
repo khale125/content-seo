@@ -6,7 +6,7 @@ primary_query: "chuồn chuồn bay vào nhà"
 data_as_of: "2026-09-24"
 review_after: "2027-09-24"
 schema: "BlogPosting"
-schema_extra: "BreadcrumbList, FAQPage"
+schema_extra: "BreadcrumbList, FAQPage, ImageObject"
 toc: false
 author: ""
 status: "DRAFT"
@@ -17,6 +17,10 @@ status: "DRAFT"
 ## Một con chuồn chuồn đậu trên rèm cửa làm nhiều người vừa tò mò vừa lo, nên câu hỏi đầu tiên thường là điềm lành hay điềm dữ
 
 **Chuồn chuồn bay vào nhà** được dân gian xem là điềm lành trong phần lớn trường hợp, gắn với tin vui và chuyện suôn sẻ sắp tới. Bên cạnh đó còn có lý do tự nhiên đã được nghiên cứu: loài này nhận ra mặt nước bằng ánh sáng phản chiếu nên sân ướt hay mái tôn rất dễ bị nhầm. Mời bạn cùng theo dõi bài viết dưới đây của Muaban.net để biết chuồn chuồn bay vào nhà là điềm gì trong từng trường hợp.
+
+![Chuồn chuồn bay vào nhà rồi đậu trên bệ cửa sổ sơn trắng, nhìn ra ngoài qua lớp kính](images/chuon-chuon-dau-be-cua-so.jpg)
+
+*Chuồn chuồn đậu trên bệ cửa sổ phía trong nhà, cảnh nhiều gia đình từng bắt gặp*
 
 ### I. Chuồn chuồn bay vào nhà là điềm gì, lành hay dữ
 
@@ -44,6 +48,10 @@ thì chỉ cần biết đây là quan niệm chứ không phải quy luật.
 
 Sau câu hỏi lành hay dữ, người ta thường hỏi tiếp một câu thực tế hơn nhiều: có phải quanh nhà đang có thứ gì đó kéo chúng tới không. Chuồn chuồn thuộc bộ Odonata với hơn 3.000 loài đã được ghi nhận, và chúng gắn chặt với môi trường nước từ lúc còn là ấu trùng cho tới khi trưởng thành.
 
+![Chuồn chuồn xanh sọc đen đậu trên chậu xương rồng đỏ trong một khu vườn có sỏi](images/chuon-chuon-xanh-vuon-nha-tphcm.jpg)
+
+*Chuồn chuồn xanh đậu trên chậu xương rồng trong một khu vườn ở TP.HCM*
+
 #### 1. Bề mặt bóng và tối bị nhầm thành mặt nước
 
 Một [nghiên cứu công bố trên PLoS ONE năm 2014](https://pmc.ncbi.nlm.nih.gov/articles/PMC4116178/) cho biết các loài côn trùng sống gắn với nước nhận ra mặt nước nhờ ánh sáng phân cực ngang phản xạ từ đó nên những bề mặt nhân tạo tối và bóng cũng phát ra tín hiệu tương tự rồi kéo chúng tới. Mái tôn sau cơn mưa, sân gạch còn đọng nước, nắp bể inox và mảng cửa kính lớn đều nằm trong nhóm đó.
@@ -56,6 +64,10 @@ Một [nghiên cứu công bố trên PLoS ONE năm 2014](https://pmc.ncbi.nlm.n
 
 Nhà gần ao hồ, kênh rạch, ruộng hoặc vườn rậm luôn gặp chuồn chuồn nhiều hơn và chuyện đó bình thường tới mức không cần giải thích thêm. Ngoài ra bạn nên kiểm tra những chỗ đọng nước nhỏ ngay trong nhà bởi khay hứng nước máy lạnh và chậu cây ngập nước đều là nơi côn trùng tìm tới.
 
+![Chuồn chuồn cái thân xanh lục cong đuôi chạm mặt nước ao để đẻ trứng, bóng phản chiếu bên dưới](images/chuon-chuon-de-trung-mat-nuoc.jpg)
+
+*Chuồn chuồn cái chạm đuôi xuống mặt nước để đẻ trứng, nơi ấu trùng của chúng sẽ lớn lên*
+
 ### III. Điềm báo chuồn chuồn theo từng tình huống thường gặp
 
 Dân gian không gán một ý nghĩa chung cho mọi lần chuồn chuồn bay vào, mà xét theo loài, theo thời điểm và theo cách con vật xuất hiện trong nhà.
@@ -63,6 +75,10 @@ Dân gian không gán một ý nghĩa chung cho mọi lần chuồn chuồn bay 
 #### 1. Chuồn chuồn kim bay vào nhà
 
 Bên cạnh đó chuồn chuồn kim thân mảnh, bay chậm và hay đậu lâu nên dân gian xem con này là dấu hiệu của chuyện nhẹ nhàng đang tới, thường gắn với tin tốt trong quan hệ gia đình.
+
+![Chuồn chuồn kim thân mảnh màu xanh dương đậu trên lá cây, hai đôi cánh khép dọc thân](images/chuon-chuon-kim-xanh-ben-tre.jpg)
+
+*Chuồn chuồn kim thân mảnh, khép cánh dọc thân khi đậu, ảnh chụp ở Bến Tre*
 
 #### 2. Chuồn chuồn đậu lên người
 
@@ -127,6 +143,14 @@ Màu sắc của chuồn chuồn là đặc điểm của loài chứ không ph�
 | Nâu | Nhắc giữ nếp sinh hoạt, đừng thay đổi vội | Màu phổ biến ở vùng ruộng và ven kênh |
 
 Bạn nên xem bảng trên như cách người xưa gửi gắm mong muốn qua màu sắc, chứ đừng dựa vào nó để quyết định việc gì quan trọng trong nhà.
+
+![Chuồn chuồn cái thân vàng rực, mắt nâu, đậu trên một cành cây khô](images/chuon-chuon-ot-cai-mau-vang.jpg)
+
+*Con cái của loài chuồn chuồn ớt lại có màu vàng, ảnh chụp ở Bến Tre*
+
+![Chuồn chuồn ớt đực màu đỏ tươi từ mắt tới đuôi đậu trên một cành cây nhỏ](images/chuon-chuon-ot-duc-mau-do.jpg)
+
+*Con đực chuồn chuồn ớt đỏ tươi từ mắt tới chóp đuôi, màu dễ nhận ra nhất*
 
 ### V. Mơ thấy chuồn chuồn là điềm báo gì
 
