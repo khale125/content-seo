@@ -50,8 +50,14 @@ COMMONS_API = "https://commons.wikimedia.org/w/api.php"
 OPENVERSE_API = "https://api.openverse.org/v1/images/"
 
 PREVIEW_W = 640
-FINAL_W = 1200          # WordPress tu sinh cac co nho hon tu ban nay
+FINAL_W = 1600          # tai ban lon hon dich de con cho cat khung
 MIN_W_DEFAULT = 1000
+
+# Kich thuoc anh trong bai: QUYET DINH CUA CHU DU AN (25/09/2026). Do 294 anh gan nhat
+# tren thu vien Media cua blog: 800x450 chiem 74%, 800x600 chiem 12%. Chu du an chon
+# 800x600. Muon doi thi doi DUNG HAI SO nay — onpage_check doc tu day.
+IMAGE_W, IMAGE_H = 800, 600
+JPEG_QUALITY = 85
 
 MANIFEST_COLS = ["position", "file_name", "purpose", "source_url", "creator", "license",
                  "license_url", "retrieved_date", "alt_text", "caption", "rights_status"]
@@ -373,9 +379,15 @@ def cmd_fetch(args) -> int:
     folder = folder_of(args.slug)
     base, _ = safe_name(args.name)
     ext = ext_from(fresh["image_url"], fresh["mime"])
-    file_name = f"{base}{ext}"
+    original = os.path.join(folder, "images", "_goc", f"{base}{ext}")
+    http_download(fresh["image_url"], original)
+    file_name = f"{base}.jpg"
     dest = os.path.join(folder, "images", file_name)
-    size = http_download(fresh["image_url"], dest)
+    try:
+        size = make_frame(original, dest, parse_focus(args.focus))
+    except ValueError as exc:
+        print(f"[ANH] TU CHOI {args.candidate}: {exc}")
+        return 1
 
     manifest = os.path.join(folder, "image-manifest.csv")
     rows = [r for r in read_manifest(manifest)
@@ -398,13 +410,83 @@ def cmd_fetch(args) -> int:
                              int(re.sub(r"\D", "", r["position"]) or 0)))
     write_manifest(manifest, rows)
 
-    print(f"[ANH] Da tai {file_name} ({size // 1024} KB) — {fresh['license']} — {status}")
+    print(f"[ANH] Da tai {file_name} ({IMAGE_W}x{IMAGE_H}, {size // 1024} KB) — "
+          f"{fresh['license']} — {status}")
+    print(f"      MO {os.path.relpath(dest, ROOT)} RA XEM: cat khung co the cat mat chu the.")
+    print("      Lech thi chay `reframe` voi --focus khac, vd --focus 0.5,0.35.")
     if status == "BLOCKED":
         print(f"      Anh tu Openverse: mo {fresh['landing_url']} kiem giay phep o trang goc,")
         print("      roi chay lai lenh nay voi --verified de dat CLEARED.")
     print("\nChen vao bai (dong trong giua anh va chu thich):\n")
     print(f"![{args.alt}](images/{file_name})\n")
     print(f"*{args.caption}*")
+    return 0
+
+
+# --------------------------------------------------------------------------
+# Cat khung ve dung kich thuoc
+# --------------------------------------------------------------------------
+
+def parse_focus(text: str) -> tuple[float, float]:
+    """"x,y" trong khoang 0..1: tam cua khung cat. 0.5,0.5 la giua anh."""
+    try:
+        fx, fy = (float(v) for v in (text or "0.5,0.5").split(","))
+    except ValueError:
+        raise SystemExit(f"[ANH] --focus phai co dang x,y trong khoang 0..1, vd 0.5,0.4")
+    return min(max(fx, 0.0), 1.0), min(max(fy, 0.0), 1.0)
+
+
+def make_frame(src: str, dest: str, focus: tuple[float, float]) -> int:
+    """Cat anh ve dung ty le IMAGE_W:IMAGE_H quanh diem `focus`, thu ve dung kich
+    thuoc, luu JPEG. Anh goc nho hon kich thuoc dich thi TU CHOI chu khong phong to:
+    phong to la anh vo, va nguoi doc nhin thay ngay.
+
+    Day la cho duy nhat trong du an can thu vien ngoai (Pillow). Tren Ubuntu cai bang
+    `sudo apt install python3-pil`, khong can pip.
+    """
+    try:
+        from PIL import Image, ImageOps
+    except ImportError:
+        raise SystemExit("[ANH] Thieu Pillow de cat anh. Ubuntu: sudo apt install python3-pil"
+                         " · Windows: pip install pillow")
+    with Image.open(src) as im:
+        im = ImageOps.exif_transpose(im).convert("RGB")
+        w, h = im.size
+        target = IMAGE_W / IMAGE_H
+        if w / h > target:
+            cw, ch = round(h * target), h
+        else:
+            cw, ch = w, round(w / target)
+        if cw < IMAGE_W or ch < IMAGE_H:
+            raise ValueError(f"anh goc {w}x{h}, cat ve {IMAGE_W}x{IMAGE_H} se phai phong to")
+        fx, fy = focus
+        left = min(max(round(fx * w - cw / 2), 0), w - cw)
+        top = min(max(round(fy * h - ch / 2), 0), h - ch)
+        frame = im.crop((left, top, left + cw, top + ch)).resize((IMAGE_W, IMAGE_H),
+                                                                  Image.LANCZOS)
+        os.makedirs(os.path.dirname(dest), exist_ok=True)
+        frame.save(dest, "JPEG", quality=JPEG_QUALITY, optimize=True, progressive=True)
+    return os.path.getsize(dest)
+
+
+def cmd_reframe(args) -> int:
+    """Cat lai tu anh goc da luu o images/_goc/, vi du khi khung giua cat mat chu the."""
+    folder = folder_of(args.slug)
+    base, _ = safe_name(args.name)
+    goc_dir = os.path.join(folder, "images", "_goc")
+    src = next((os.path.join(goc_dir, f) for f in sorted(os.listdir(goc_dir))
+                if os.path.splitext(f)[0] == base), None) if os.path.isdir(goc_dir) else None
+    if not src:
+        print(f"[ANH] Khong co anh goc cho {base} trong images/_goc/. Chay lai `fetch`.")
+        return 1
+    dest = os.path.join(folder, "images", f"{base}.jpg")
+    try:
+        size = make_frame(src, dest, parse_focus(args.focus))
+    except ValueError as exc:
+        print(f"[ANH] {exc}")
+        return 1
+    print(f"[ANH] Da cat lai {base}.jpg ({IMAGE_W}x{IMAGE_H}, {size // 1024} KB), "
+          f"focus {args.focus}. Mo ra xem lai.")
     return 0
 
 
@@ -453,14 +535,22 @@ def main() -> int:
     f.add_argument("--alt", required=True, help="mo ta dung noi dung anh")
     f.add_argument("--caption", required=True, help="7-20 tu, gan voi y cua muc")
     f.add_argument("--purpose", required=True, help="anh nay giai thich duoc gi")
+    f.add_argument("--focus", default="0.5,0.5",
+                   help="tam khung cat x,y trong 0..1 (mac dinh giua anh)")
     f.add_argument("--verified", action="store_true",
                    help="chi voi Openverse: da mo trang goc va xac nhan giay phep")
+
+    r = sub.add_parser("reframe", help="cat lai anh da tai tu ban goc, voi tam khung khac")
+    r.add_argument("--slug", required=True)
+    r.add_argument("--name", required=True, help="ten file anh trong bai, vd chuon-chuon-kim.jpg")
+    r.add_argument("--focus", default="0.5,0.5", help="tam khung cat x,y trong 0..1")
 
     l = sub.add_parser("list", help="xem manifest cua bai")
     l.add_argument("--slug", required=True)
 
     args = ap.parse_args()
-    return {"search": cmd_search, "fetch": cmd_fetch, "list": cmd_list}[args.cmd](args)
+    return {"search": cmd_search, "fetch": cmd_fetch, "reframe": cmd_reframe,
+            "list": cmd_list}[args.cmd](args)
 
 
 if __name__ == "__main__":

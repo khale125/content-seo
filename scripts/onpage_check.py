@@ -586,9 +586,11 @@ def check_toc_and_captions(doc, report: Report) -> None:
                 captioned += 1
         report.metrics["anh co caption"] = f"{captioned}/{len(images)}"
         if captioned < len(images):
-            report.add("images", WARN,
+            # BLOCK tu 25/09/2026 theo yeu cau chu du an: moi anh phai co chu thich.
+            report.add("images", BLOCK,
                        f"{len(images) - captioned}/{len(images)} anh khong co caption.",
-                       guidance="File quy chuan yeu cau moi anh co caption mo ta phu hop bai viet.")
+                       guidance="Dat mot dong in nghieng ngay duoi anh (co the cach mot dong trong), "
+                                "7-20 tu, gan voi y cua muc.")
 
 
 def check_meta_keyword(meta: str, primary: str, report: Report) -> None:
@@ -849,9 +851,11 @@ def check_images(doc, primary: str, report: Report) -> None:
     pn = normalize(primary) if primary else ""
     for alt, src, lineno, _ in images:
         if not alt.strip():
-            report.add("images", WARN, f"Anh thieu alt: {src}", line=lineno,
-                       guidance="Mo ta noi dung anh cho nguoi khong nhin thay. Anh trang tri thuan "
-                                'tuy thi de alt rong co y ("").')
+            # BLOCK tu 25/09/2026 theo yeu cau chu du an: moi anh phai co alt. Bai that
+            # dong y — 0/1.377 the <img> tren 24 bai co alt rong.
+            report.add("images", BLOCK, f"Anh thieu alt: {src}", line=lineno,
+                       guidance="Mo ta dung noi dung anh cho nguoi khong nhin thay. Anh dau bai "
+                                "chua tu khoa chinh nhung van phai ta dung anh.")
             continue
         if pn and normalize(alt).count(pn) >= 2:
             report.add("images", BLOCK, f'Alt nhoi tu khoa: "{alt}"', line=lineno,
@@ -1011,6 +1015,53 @@ def check_outlink_placement(doc, internal_host: str, report: Report) -> None:
                             "tro danh sach tham khao.")
 
 
+def image_size(path: str) -> tuple[int, int] | None:
+    """Doc kich thuoc anh JPEG / PNG / WebP / GIF chi bang thu vien chuan.
+
+    Bo kiem khong duoc can Pillow: no phai chay tren moi may kiem bai, ke ca may
+    khong tim anh. Chi image_search.py (luc cat anh) moi can Pillow.
+    """
+    import struct
+    try:
+        with open(path, "rb") as fh:
+            head = fh.read(32)
+            if head[:8] == b"\x89PNG\r\n\x1a\n":
+                return struct.unpack(">II", head[16:24])
+            if head[:6] in (b"GIF87a", b"GIF89a"):
+                return struct.unpack("<HH", head[6:10])
+            if head[:4] == b"RIFF" and head[8:12] == b"WEBP":
+                kind = head[12:16]
+                if kind == b"VP8X":
+                    w = int.from_bytes(head[24:27], "little") + 1
+                    h = int.from_bytes(head[27:30], "little") + 1
+                    return w, h
+                if kind == b"VP8 ":
+                    fh.seek(26)
+                    w, h = struct.unpack("<HH", fh.read(4))
+                    return w & 0x3FFF, h & 0x3FFF
+                if kind == b"VP8L":
+                    b = head[21:25]
+                    w = 1 + (((b[1] & 0x3F) << 8) | b[0])
+                    h = 1 + (((b[3] & 0xF) << 10) | (b[2] << 2) | ((b[1] & 0xC0) >> 6))
+                    return w, h
+            if head[:2] == b"\xff\xd8":
+                fh.seek(2)
+                while True:
+                    marker = fh.read(2)
+                    if len(marker) < 2 or marker[0] != 0xFF:
+                        return None
+                    if marker[1] in (0xC0, 0xC1, 0xC2, 0xC3, 0xC5, 0xC6, 0xC7,
+                                     0xC9, 0xCA, 0xCB, 0xCD, 0xCE, 0xCF):
+                        fh.read(3)
+                        h, w = struct.unpack(">HH", fh.read(4))
+                        return w, h
+                    seg = struct.unpack(">H", fh.read(2))[0]
+                    fh.seek(seg - 2, 1)
+    except (OSError, struct.error):
+        return None
+    return None
+
+
 def check_image_manifest(doc, article_path: str, report: Report) -> None:
     """Moi anh trong bai phai co mot dong trong `image-manifest.csv`, va dong do phai
     da CLEARED ban quyen.
@@ -1085,6 +1136,20 @@ def check_image_manifest(doc, article_path: str, report: Report) -> None:
                                line=lineno,
                                guidance="CC BY bat buoc ghi tac gia, nguon va giay phep. "
                                         "wp_draft.py in dong ghi cong tu chinh cac cot nay.")
+        # Kich thuoc: quyet dinh cua chu du an, hang so nam o image_search.py.
+        from image_search import IMAGE_W, IMAGE_H
+        fpath = os.path.join(folder, "images", (row.get("file_name") or "").strip())
+        if os.path.isfile(fpath):
+            dims = image_size(fpath)
+            if dims != (IMAGE_W, IMAGE_H):
+                got = f"{dims[0]}x{dims[1]}" if dims else "khong doc duoc"
+                report.add("images", BLOCK,
+                           f"Anh {name} co kich thuoc {got}, phai dung {IMAGE_W}x{IMAGE_H}.",
+                           line=lineno,
+                           guidance="Cat lai bang `python scripts/image_search.py reframe "
+                                    "--slug <slug> --name <file> --focus x,y`.")
+        else:
+            report.add("images", BLOCK, f"Khong thay tep anh {name} trong images/.", line=lineno)
         cap_words = word_count((row.get("caption") or "").strip())
         if cap_words and not (CAPTION_WORDS_MIN <= cap_words <= CAPTION_WORDS_MAX):
             report.add("images", INFO,

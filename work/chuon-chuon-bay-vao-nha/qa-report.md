@@ -1,6 +1,6 @@
 # Báo cáo QA — 002 · chuon-chuon-bay-vao-nha
 
-Bản 0.2.10 · cập nhật 25/09/2026 · bài `UPDATE` cho URL đang đăng
+Bản 0.2.11 · cập nhật 25/09/2026 · bài `UPDATE` cho URL đang đăng
 `https://muaban.net/blog/chuon-chuon-bay-vao-nha-219339/`
 
 ## 1. Máy kiểm
@@ -221,6 +221,11 @@ câu mở mục IV rằng màu sắc là đặc điểm của loài chứ không
 - **Máng xối nhỏ giọt** cho mục VI — không cho thấy chỗ nước đọng mà đoạn văn đang nói tới.
 - **"Leaf Window"** — kết quả cho từ khoá "dragonfly window", thực ra là chuồn chuồn đậu sau một
   chiếc lá thủng. Ví dụ rõ nhất vì sao phải mở ảnh ra xem.
+
+**Cắt về 800x600 (0.2.10 → 0.2.11).** Chủ dự án đặt quy tắc mọi ảnh đúng 800x600. Cả sáu ảnh được
+cắt lại từ bản gốc và **mở ra xem từng ảnh**. Năm ảnh cắt giữa khung vẫn giữ đủ con vật; ảnh chuồn
+chuồn xanh ở TP.HCM bị cắt mất đuôi nên cắt lại với `--focus 0.66,0.5`. Chú thích không phải đổi:
+ảnh sau khi cắt vẫn đúng như chữ mô tả.
 
 **Ghi công:** cả sáu ảnh đều là CC BY hoặc CC BY-SA, **bắt buộc** ghi tác giả, nguồn và giấy phép.
 Làm bước này thì lộ ra `wp_draft.py` trước nay **không in dòng ghi công nào**, tức là đưa ảnh CC BY qua

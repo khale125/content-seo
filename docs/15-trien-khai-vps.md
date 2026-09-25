@@ -22,7 +22,7 @@ có web server. Nó chỉ chủ động gọi ra Lark, WordPress `muaban.net/blo
 
 ```bash
 sudo apt update
-sudo apt install -y python3 python-is-python3 git tmux unzip curl locales
+sudo apt install -y python3 python-is-python3 python3-pil git tmux unzip curl locales
 
 # Node.js 20 LTS
 curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
@@ -32,6 +32,7 @@ sudo apt install -y nodejs
 | Gói | Phiên bản |
 |---|---|
 | Python | 3.10 trở lên (Ubuntu 24.04 có sẵn 3.12). **Không cần cài gói pip nào** |
+| `python3-pil` | Thư viện xử lý ảnh, để cắt ảnh bài viết về 800x600 |
 | `python-is-python3` | Để lệnh `python` chạy được. Ubuntu mặc định chỉ có `python3`, trong khi công cụ gọi `python` |
 | Node.js + npm | 20 LTS |
 | `git`, `tmux`, `unzip`, `curl`, `locales` | Bản của apt |

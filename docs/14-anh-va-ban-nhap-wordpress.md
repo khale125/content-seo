@@ -77,7 +77,9 @@ kiểu "Ảnh minh họa" hay "Nguồn: Internet".
 | Ảnh trong bài không có dòng trong `image-manifest.csv` | **`BLOCK`** |
 | Dòng manifest có `rights_status` khác `CLEARED` | **`BLOCK`** |
 | Manifest thiếu `source_url`, `license`, `alt_text` hay `caption` | `WARN` |
-| Ảnh thiếu alt, alt nhồi từ khóa, ảnh không có chú thích | `WARN` / `BLOCK` (đã có từ trước) |
+| **Ảnh thiếu alt** hoặc **thiếu chú thích** | **`BLOCK`** (từ 25/09/2026, trước đó là `WARN`) |
+| **Ảnh không đúng 800x600**, hoặc tệp ảnh không có trong `images/` | **`BLOCK`** |
+| Alt nhồi từ khóa | `BLOCK` |
 | Số ảnh dưới 6, hoặc chú thích ngoài 7–20 từ | ghi chú (`INFO`) |
 | Ảnh internet có giấy phép NC, ND, GFDL đơn lẻ hoặc không nhận ra được | **`BLOCK`** |
 | Ảnh CC BY / CC BY-SA thiếu `creator` hoặc `license_url` — không ghi công được | **`BLOCK`** |
@@ -130,6 +132,21 @@ phép của ảnh. Lỗ hổng này lộ ra khi bài 002 lần đầu lấy ản
    đẹp chụp ở châu Âu.
 4. **Chú thích chỉ nói điều nhìn thấy hoặc điều mô tả gốc ghi.** Ghi "ảnh chụp ở Bến Tre" vì trang
    Commons ghi vậy; ảnh chụp ở Ấn Độ thì chú thích tả con vật và bỏ phần địa điểm.
+
+**Kích thước 800x600 — quyết định của chủ dự án.** Đo 294 ảnh gần nhất trên thư viện Media của
+blog: 800x450 chiếm 74%, 800x600 chiếm 12%. Chủ dự án chọn 800x600. `fetch` tải bản gốc vào
+`images/_goc/` (không commit), cắt về tỷ lệ 4:3 quanh `--focus x,y` (mặc định giữa ảnh), thu về
+800x600 rồi lưu JPEG. Ảnh gốc nhỏ hơn 800x600 sau khi cắt thì **bị từ chối**, không phóng to.
+
+Cắt khung giữa hay cắt mất chủ thể. Lần làm bài 002, ảnh chuồn chuồn ở TP.HCM mất phần đuôi; chạy
+lại với `--focus 0.66,0.5` là đủ:
+
+```powershell
+python scripts/image_search.py reframe --slug <slug> --name <ten-file.jpg> --focus 0.66,0.5
+```
+
+Máy kiểm đọc kích thước bằng thư viện chuẩn, không cần Pillow. Chỉ `image_search.py` lúc cắt ảnh mới
+cần Pillow — trên Ubuntu cài bằng `sudo apt install python3-pil`, không cần pip.
 
 **Chú thích ảnh và phép đo giọng văn.** Kho bài thật lưu ảnh bằng dòng `[CAPTION]`, và phép đo đã
 bỏ các dòng đó từ đầu. Bài đang viết dùng khuôn `![alt](...)` rồi `*chú thích*`, nên

@@ -88,12 +88,24 @@ python scripts/image_search.py fetch c014 --slug <slug> --position body-3 `
   --purpose "Mục III.1: để người đọc nhận ra chuồn chuồn kim khác chuồn chuồn thường"
 ```
 
-`fetch` hỏi lại nguồn (giấy phép có thể đã đổi từ lúc tìm), tải bản rộng 1.200px, rồi ghi đủ 11 cột
+`fetch` hỏi lại nguồn (giấy phép có thể đã đổi từ lúc tìm), tải bản gốc, **cắt về đúng 800x600**
+quanh `--focus x,y` (mặc định `0.5,0.5` là giữa ảnh), rồi ghi đủ 11 cột
 manifest với `rights_status = CLEARED`. Ảnh từ **Openverse** được ghi `BLOCKED`: bạn mở trang gốc
 mà công cụ in ra, xác nhận giấy phép ở đó, rồi chạy lại với `--verified`.
 
+**Mở ảnh đã cắt ra xem.** Cắt từ ảnh ngang về 4:3 hay cắt mất đuôi hoặc cánh. Lệch thì cắt lại
+từ bản gốc mà không phải tải lại:
+
+```powershell
+python scripts/image_search.py reframe --slug <slug> --name <ten-file.jpg> --focus 0.66,0.5
+```
+
+`x` lớn hơn 0,5 là dời khung sang phải, `y` nhỏ hơn 0,5 là dời lên trên. Ảnh gốc quá nhỏ để cắt ra
+800x600 thì công cụ từ chối — tìm ảnh khác, đừng phóng to.
+
 - **`--alt`** tả đúng ảnh cho người không nhìn thấy. Ảnh đầu bài chứa từ khoá chính nhưng vẫn phải
   tả đúng ảnh.
+- **Alt và chú thích là bắt buộc** — thiếu một trong hai là `BLOCK`.
 - **`--caption`** dài **7–20 từ** (công cụ từ chối ngoài dải này), gắn với ý của mục, không phải
   "Ảnh minh họa".
 - **`--name`** không dấu, chữ thường, tả nội dung ảnh.

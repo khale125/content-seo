@@ -376,6 +376,12 @@ def credit_parts(row: dict) -> tuple[str, str]:
     return as_html, as_text
 
 
+def _file_sha(path: str) -> str:
+    import hashlib
+    with open(path, "rb") as fh:
+        return hashlib.sha256(fh.read()).hexdigest()[:16]
+
+
 def upload_images(folder: str, rows: list[dict], auth: str,
                   dry: bool, uploaded: dict | None = None) -> dict[str, dict]:
     """Tai anh len thu vien Media. Anh da tai o lan truoc (ghi trong .wp.json) thi
@@ -388,11 +394,14 @@ def upload_images(folder: str, rows: list[dict], auth: str,
         path = os.path.join(folder, "images", name)
         if not os.path.isfile(path):
             raise WpError(f"Thieu file anh: {path}")
+        digest = _file_sha(path)
         old = uploaded.get(name)
-        if old and old.get("id") and not dry:
+        # Chi dung lai khi TEP KHONG DOI. Cat lai anh ma giu nguyen ten tep thi phai tai
+        # len lai, neu khong ban nhap van mang anh cu.
+        if old and old.get("id") and old.get("sha") == digest and not dry:
             try:
                 call("GET", f"{API}/media/{old['id']}?_fields=id", auth)
-                media[name] = {"id": old["id"], "source_url": old["source_url"],
+                media[name] = {"id": old["id"], "source_url": old["source_url"], "sha": digest,
                                "caption": (row.get("caption") or "").strip(),
                                "credit": credit_parts(row)[0],
                                "position": (row.get("position") or "").strip()}
@@ -420,7 +429,7 @@ def upload_images(folder: str, rows: list[dict], auth: str,
             # bai khac tu thu vien, luc do khong con figcaption cua bai nay.
             "caption": f"{cap_plain} — {credit_text}" if credit_text else cap_plain,
         })
-        media[name] = {"id": item["id"], "source_url": item["source_url"],
+        media[name] = {"id": item["id"], "source_url": item["source_url"], "sha": digest,
                        "caption": cap_plain,
                        "credit": credit_html,
                        "position": (row.get("position") or "").strip()}
@@ -632,7 +641,8 @@ def run(folder: str, dry: bool, category: str, allow_new: bool = False) -> int:
 
     edit_url = f"{SITE}/wp-admin/post.php?post={item['id']}&action=edit"
     save_state(folder, {"post_id": item["id"], "slug": slug, "edit_url": edit_url,
-                        "media": {k: {"id": v["id"], "source_url": v["source_url"]}
+                        "media": {k: {"id": v["id"], "source_url": v["source_url"],
+                                      "sha": v.get("sha", "")}
                                   for k, v in media.items() if v.get("id")}})
     report_to_base(folder, edit_url)
     print(f"\n     Mo de duyet va dang: {edit_url}")

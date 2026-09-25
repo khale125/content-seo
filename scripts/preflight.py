@@ -101,6 +101,13 @@ def check_data() -> None:
     check(f"kho bai that: {n} bai", n >= CORPUS_MIN,
           note="" if n >= CORPUS_MIN else f"can >= {CORPUS_MIN}; moi nguong giong van do tu day")
 
+    try:
+        import PIL
+        pil_ok, pil_note = True, f"Pillow {PIL.__version__}"
+    except ImportError:
+        pil_ok, pil_note = False, "Ubuntu: sudo apt install python3-pil · Windows: pip install pillow"
+    check("Pillow (cat anh ve 800x600 khi tim anh)", pil_ok, note=pil_note if not pil_ok else pil_note)
+
     for rel, required in (
         ("scripts/lexicon/ai_phrases.json", True),
         ("scripts/lexicon/house_voice.json", True),

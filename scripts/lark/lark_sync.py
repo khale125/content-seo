@@ -109,6 +109,21 @@ def content_hash(workdir: str) -> str:
         path = os.path.join(workdir, name)
         h.update(name.encode())
         h.update(_read(path).encode() if os.path.exists(path) else b"")
+    # Anh cung la thu nguoi duyet nhin (ban xem truoc co anh), nen doi anh — ke ca cat
+    # lai cung ten tep — la doi noi dung da duyet. Chi tinh khi bai CO anh, de checksum
+    # cua moi bai cu khong co anh giu nguyen, khong bi keo ve cong duyet oan.
+    img_dir = os.path.join(workdir, "images")
+    if os.path.isdir(img_dir):
+        manifest = os.path.join(workdir, "image-manifest.csv")
+        if os.path.exists(manifest):
+            h.update(b"image-manifest.csv")
+            h.update(_read(manifest).encode())
+        for fname in sorted(os.listdir(img_dir)):
+            fpath = os.path.join(img_dir, fname)
+            if os.path.isfile(fpath):
+                h.update(fname.encode())
+                with open(fpath, "rb") as fh:
+                    h.update(fh.read())
     return h.hexdigest()[:16]
 
 

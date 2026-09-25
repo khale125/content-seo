@@ -43,3 +43,6 @@ logs/
 # Doi lai: hai nguoi cung sua mot bai se cham nhau o `content_version` va
 # `content_hash`. Khi git bao conflict o .lark.json, lay ban co content_version
 # CAO HON roi chay lai `lark_sync.py push work/<slug>`.
+
+# Anh goc truoc khi cat 800x600 — tai lai duoc tu nguon
+work/*/images/_goc/

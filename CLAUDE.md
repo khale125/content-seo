@@ -249,6 +249,13 @@ project này chỉ lo **chất lượng nội dung và SEO**. Không có quyền
     ảnh CC BY; trước 25/09/2026 nó không in, tức là mọi ảnh CC BY đưa qua script đều vi phạm giấy
     phép — người đăng bài **không được xoá dòng ghi công** trên WordPress.
 
+    **Mọi ảnh đúng 800x600, có alt và có chú thích — cả ba là `BLOCK`.** Đây là **quyết định của
+    chủ dự án**, không phải số đo: 294 ảnh gần nhất trên thư viện Media của blog có 74% là 800x450 và
+    12% là 800x600. Kích thước nằm ở hai hằng số `IMAGE_W`, `IMAGE_H` trong `image_search.py`;
+    `onpage_check.py` đọc từ đó. `image_search.py` tự cắt ảnh về đúng tỷ lệ quanh điểm `--focus` rồi
+    thu về 800x600, và **từ chối phóng to** ảnh gốc nhỏ hơn. Cắt khung có thể cắt mất chủ thể, nên
+    **phải mở ảnh đã cắt ra xem**; lệch thì `reframe` với `--focus` khác.
+
 ## Quy trình
 
 ```
