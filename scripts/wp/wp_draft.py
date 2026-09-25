@@ -377,13 +377,29 @@ def credit_parts(row: dict) -> tuple[str, str]:
 
 
 def upload_images(folder: str, rows: list[dict], auth: str,
-                  dry: bool) -> dict[str, dict]:
+                  dry: bool, uploaded: dict | None = None) -> dict[str, dict]:
+    """Tai anh len thu vien Media. Anh da tai o lan truoc (ghi trong .wp.json) thi
+    dung lai, khong tai lan nua — neu khong, moi lan cap nhat ban nhap lai sinh them
+    mot bo anh trung trong thu vien Media."""
     media: dict[str, dict] = {}
+    uploaded = uploaded or {}
     for row in rows:
         name = (row.get("file_name") or "").strip()
         path = os.path.join(folder, "images", name)
         if not os.path.isfile(path):
             raise WpError(f"Thieu file anh: {path}")
+        old = uploaded.get(name)
+        if old and old.get("id") and not dry:
+            try:
+                call("GET", f"{API}/media/{old['id']}?_fields=id", auth)
+                media[name] = {"id": old["id"], "source_url": old["source_url"],
+                               "caption": (row.get("caption") or "").strip(),
+                               "credit": credit_parts(row)[0],
+                               "position": (row.get("position") or "").strip()}
+                print(f"  [WP] dung lai anh {name} (media #{old['id']})")
+                continue
+            except WpError:
+                pass                     # anh da bi xoa khoi thu vien: tai lai
         if dry:
             media[name] = {"id": 0, "source_url": f"(chua tai) {name}",
                            "caption": (row.get("caption") or "").strip(),
@@ -563,10 +579,15 @@ def run(folder: str, dry: bool, category: str, allow_new: bool = False) -> int:
         me = call("GET", f"{API}/users/me?_fields=id,name,slug", auth)
         print(f"     dang nhap: {me.get('name')} (id {me.get('id')})")
 
-    if not dry:
+    # Chot UPDATE ton tai de khong TAO THEM mot bai moi. Cap nhat ban nhap da co trong
+    # .wp.json thi khong tao bai nao, nen khong chan. Truoc day chot chay moi lan, nen
+    # bai 002 — UPDATE cho bai dang song 219339, da co ban nhap #616855 — se bi chan
+    # ngay luot cap nhat anh dau tien sau khi duyet.
+    prior = load_state(folder)
+    if not dry and not prior.get("post_id"):
         guard_update(folder, auth, allow_new)
 
-    media = upload_images(folder, rows, auth, dry)
+    media = upload_images(folder, rows, auth, dry, prior.get("media") or {})
     body_start = next((i for i, l in enumerate(doc.lines)
                        if re.match(r"^#\s", l.strip())), 0)
     content = md_to_html(doc.lines[body_start:], media)
@@ -610,7 +631,9 @@ def run(folder: str, dry: bool, category: str, allow_new: bool = False) -> int:
         print(f"  [WP] da tao ban nhap #{item['id']}")
 
     edit_url = f"{SITE}/wp-admin/post.php?post={item['id']}&action=edit"
-    save_state(folder, {"post_id": item["id"], "slug": slug, "edit_url": edit_url})
+    save_state(folder, {"post_id": item["id"], "slug": slug, "edit_url": edit_url,
+                        "media": {k: {"id": v["id"], "source_url": v["source_url"]}
+                                  for k, v in media.items() if v.get("id")}})
     report_to_base(folder, edit_url)
     print(f"\n     Mo de duyet va dang: {edit_url}")
     print("     Script khong dang bai. Nhan Publish la viec cua nguoi that.")
