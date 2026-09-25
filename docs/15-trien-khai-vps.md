@@ -22,7 +22,7 @@ có web server. Nó chỉ chủ động gọi ra Lark, WordPress `muaban.net/blo
 
 ```bash
 sudo apt update
-sudo apt install -y python3 git tmux unzip curl locales fail2ban
+sudo apt install -y python3 git tmux unzip curl locales
 
 # Node.js 20 LTS
 curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
@@ -33,7 +33,7 @@ sudo apt install -y nodejs
 |---|---|
 | Python | 3.10 trở lên (Ubuntu 24.04 có sẵn 3.12). **Không cần cài gói pip nào** |
 | Node.js + npm | 20 LTS |
-| `git`, `tmux`, `unzip`, `curl`, `locales`, `fail2ban` | Bản của apt |
+| `git`, `tmux`, `unzip`, `curl`, `locales` | Bản của apt |
 
 **Không cần:** Docker, database, web server (nginx/apache).
 
@@ -52,20 +52,9 @@ sudo adduser --disabled-password --gecos "" contentseo
 sudo usermod -aG sudo contentseo      # sudo trong luc cai dat
 ```
 
-## 4. SSH: vào được từ mọi máy, ở bất cứ đâu
+## 4. SSH
 
-Người vận hành làm việc từ nhiều máy (laptop công ty, máy ở nhà, điện thoại) và từ bất kỳ mạng nào.
-Vì vậy **không giới hạn IP** cho port SSH.
-
-Bù lại việc mở cho mọi IP, cấu hình trong `/etc/ssh/sshd_config`:
-
-```
-PasswordAuthentication no
-PermitRootLogin no
-PubkeyAuthentication yes
-```
-
-rồi `sudo systemctl restart ssh` và `sudo systemctl enable --now fail2ban`.
+Cấu hình SSH **theo chuẩn thông thường của công ty**, kể cả giới hạn IP văn phòng nếu policy yêu cầu. Người vận hành chỉ cần vào server khi cài đặt và bảo trì, và làm việc đó ở văn phòng. Việc hằng ngày (duyệt bài trên Lark Base) không cần SSH nên làm ở đâu cũng được.
 
 **Khoá SSH:** đặt các public key dưới đây vào `/home/contentseo/.ssh/authorized_keys`, mỗi máy một
 dòng, chép **nguyên dòng**:
@@ -89,14 +78,11 @@ sudo chmod 600 /home/contentseo/.ssh/authorized_keys
 
 Về sau người vận hành tự thêm và gỡ khoá trong file này, không cần IT làm lại.
 
-Nếu policy của công ty bắt buộc giới hạn IP, xin cấp **tài khoản VPN** để người vận hành vẫn làm việc
-được khi không ở văn phòng.
-
 ## 5. Port
 
 | Chiều | Port | Ghi chú |
 |---|---|---|
-| Vào | **22/TCP** | Mở cho mọi IP, như mục 4 |
+| Vào | **22/TCP** | SSH, theo chuẩn của công ty |
 | Vào | 80, 443 | **Không mở.** Không cần domain, reverse proxy hay HTTPS |
 | Ra | **443/TCP** | Mở ra internet |
 
