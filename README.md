@@ -62,7 +62,7 @@ Ngoài bốn skill của quy trình còn có `humanizer-bds`: **viết lại** �
 Ba bước trên một máy mới. **Không cần `pip install` gì cả** — bộ kiểm chỉ dùng thư viện chuẩn Python.
 
 ```bash
-git clone https://github.com/<tên-của-bạn>/content-seo.git
+git clone https://github.com/khale125/content-seo.git
 cd content-seo
 
 bash install.sh                                        # Linux / macOS

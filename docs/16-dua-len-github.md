@@ -44,7 +44,7 @@ sinh xung đột), rồi:
 
 ```bash
 cd "D:/Claude code/SEO/content-seo"
-git remote add origin https://github.com/<tên-của-bạn>/content-seo.git
+git remote add origin https://github.com/khale125/content-seo.git
 git branch -M main
 git push -u origin main
 ```
@@ -60,7 +60,7 @@ Thành viên team làm ba bước. Không có `pip install` nào — bộ kiểm
 
 ```bash
 # 1. Lay ma nguon
-git clone https://github.com/<tên-của-bạn>/content-seo.git
+git clone https://github.com/khale125/content-seo.git
 cd content-seo
 
 # 2. Cai dat (kiem may + dung .env + chay hoi quy)
