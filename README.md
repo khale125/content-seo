@@ -75,8 +75,9 @@ fixture hồi quy. Phải in `Du dieu kien chay.` và thoát mã 0.
 Còn hai thông tin đăng nhập phải tự điền: `MBWP_USER` + `MBWP_APP_PASSWORD` vào `.env`, và
 `npm i -g @larksuite/cli` rồi `lark auth login`. Kiểm lại bằng
 `python scripts/preflight.py --all` (phải 23/23). Yêu cầu máy, phân quyền và cách làm việc chung trên
-một Base: [`docs/16-dua-len-github.md`](docs/16-dua-len-github.md). Dựng trên VPS Linux không màn
-hình: [`docs/15-trien-khai-vps.md`](docs/15-trien-khai-vps.md).
+một Base: [`docs/16-dua-len-github.md`](docs/16-dua-len-github.md). Chạy trên VPS: yêu cầu gửi IT ở
+[`docs/15-trien-khai-vps.md`](docs/15-trien-khai-vps.md), tự cài và vận hành ở
+[`docs/17-van-hanh-tren-vps.md`](docs/17-van-hanh-tren-vps.md).
 
 Xong thì mở **Claude Code** ngay trong thư mục này.
 

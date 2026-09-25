@@ -30,7 +30,8 @@ project này chỉ lo **chất lượng nội dung và SEO**. Không có quyền
 | Tìm ảnh cho bài, và đưa bản nháp lên WordPress (**bắt buộc**, xem quy tắc 19) | `docs/14-anh-va-ban-nhap-wordpress.md` |
 | Tìm ảnh trên internet, xem, chọn, ghi manifest và chèn vào bài | `.claude/skills/tim-anh-bds/SKILL.md` + `scripts/image_search.py` |
 | Đồng bộ và duyệt trên Lark | `docs/08-dong-bo-lark.md` |
-| Dựng dự án trên máy chủ (tài liệu cho đội IT, không phải quy tắc nội dung) | `docs/15-trien-khai-vps.md` |
+| Yêu cầu cấp VPS gửi đội IT (chỉ việc IT làm) | `docs/15-trien-khai-vps.md` |
+| Tự cài và vận hành công cụ trên VPS | `docs/17-van-hanh-tren-vps.md` |
 | Đưa repo lên GitHub, cài trên máy mới, làm việc chung trên một Base | `docs/16-dua-len-github.md` |
 
 ## Hard rules

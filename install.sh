@@ -5,7 +5,7 @@
 #
 # Script nay KHONG cai goi Python nao, vi du an chi dung thu vien chuan. Viec cua
 # no la: kiem phien ban, dung .env, do Node/Lark CLI, roi chay preflight.
-# Chi tiet may chu: docs/15-trien-khai-vps.md
+# Yeu cau may chu (IT): docs/15-trien-khai-vps.md · van hanh: docs/17-van-hanh-tren-vps.md
 
 set -uo pipefail
 cd "$(dirname "$0")"
@@ -56,7 +56,7 @@ if command -v node >/dev/null 2>&1; then
     fi
 else
     echo "[CANH BAO] Chua co Node.js. Phan dong bo Lark se khong chay."
-    echo "           Xem docs/15-trien-khai-vps.md muc 3."
+    echo "           Xem docs/17-van-hanh-tren-vps.md muc 2."
 fi
 
 echo
@@ -70,7 +70,7 @@ if [ $CODE -eq 0 ]; then
 Cai dat xong. Ba viec tiep theo:
 
   1. Dien .env            : MBWP_USER va MBWP_APP_PASSWORD (WP Admin -> Profile -> Application Passwords)
-  2. Dang nhap Lark       : lark auth login        (can trinh duyet; may khong man hinh xem docs/15 muc 6)
+  2. Dang nhap Lark       : lark auth login        (can trinh duyet; may khong man hinh xem docs/17 muc 4)
   3. Mo Claude Code trong thu muc nay roi doc CLAUDE.md
 
 Kiem lai bat ky luc nao:  python3 scripts/preflight.py --all

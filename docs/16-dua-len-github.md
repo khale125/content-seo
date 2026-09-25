@@ -1,7 +1,8 @@
 # Đưa dự án lên GitHub và cài trên máy khác
 
 Tài liệu này viết cho **người quản trị repo** và cho **thành viên mới của team** cài dự án về máy.
-Phần triển khai máy chủ nằm ở `docs/15-trien-khai-vps.md`; hai tài liệu không trùng nhau.
+Yêu cầu cấp VPS gửi IT nằm ở `docs/15-trien-khai-vps.md`; cài và vận hành trên VPS nằm ở
+`docs/17-van-hanh-tren-vps.md`.
 
 ---
 
