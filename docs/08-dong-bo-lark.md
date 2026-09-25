@@ -119,6 +119,21 @@ Nghĩa là bạn luôn duyệt đúng thứ đang nằm trước mặt, và khô
 Cả payload và việc xóa trắng đi trong **một** lệnh cập nhật bản ghi, nên không có khoảnh khắc nào
 bản ghi mang trạng thái mới mà vẫn còn phê duyệt cũ.
 
+## Bài có ảnh: ô "Bài viết" mở bản xem trước có ảnh
+
+`push` tải `article.md` lên Drive dưới dạng tệp Markdown. Tệp đó **không hiện ảnh**: ảnh trong bài trỏ
+đường dẫn tương đối `images/<tên>.jpg` mà các tệp ảnh không đi theo. Lần đầu bài 002 có ảnh, người
+duyệt mở bài trên Lark và không thấy ảnh nào, trong khi cổng duyệt bài chính là chỗ duyệt cả ảnh lẫn
+chú thích.
+
+Nay bài nào có thư mục `images/` thì `push` dựng thêm một **tài liệu Lark có ảnh**
+(`scripts/lark/preview_doc.py`): nội dung bài, mỗi ảnh chèn ngay trên dòng chú thích của nó, dòng ghi
+công đi sau chú thích, và Title / Meta / Slug ở đầu. Ô **Bài viết** trên Base trỏ vào tài liệu đó.
+Lần push sau **ghi đè đúng tài liệu cũ** rồi chèn lại ảnh, nên link người duyệt đã mở vẫn dùng được;
+mã tài liệu nằm ở `preview_token` trong `.lark.json`. Tệp `.md` vẫn được tải lên như cũ làm bản nguồn.
+
+Dựng bản xem trước mà lỗi thì `push` **không dừng**: nó in cảnh báo và ô Bài viết trỏ về tệp `.md`.
+
 ## Sửa bài sau khi đã duyệt: quay về cổng bài
 
 "Đã xong" và "Đã lên nháp WordPress" là trạng thái cuối **chỉ khi nội dung không đổi**. Push một bản

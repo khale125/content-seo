@@ -732,6 +732,24 @@ def cmd_push(workdir: str, cfg: dict, force_bump: bool) -> int:
     place_docs(cfg, targets, {"brief": brief_token, "outline": outline_token,
                               "article": article_token}, state)
 
+    # Bai co anh: tep Markdown tren Drive KHONG hien anh (anh tro duong dan tuong doi
+    # ma tep anh khong di theo), nen nguoi duyet phai duyet mot bai co anh ma khong
+    # thay anh nao. Dung them tai lieu Lark CO ANH va cho o "Bai viet" tro vao do.
+    # Tep .md van duoc tai len nhu cu lam ban nguon.
+    preview_errors: list[str] = []
+    if os.path.isdir(os.path.join(workdir, "images")) and has_article:
+        import preview_doc
+        try:
+            p_url, p_token, preview_errors = preview_doc.publish(
+                cfg, workdir, f"{content_id} - bài viết (xem trước có ảnh)",
+                state.get("preview_token"), targets["article"])
+            state["preview_token"] = p_token
+            if p_url:
+                article_url = p_url
+        except lc.LarkError as exc:
+            # Khong chet ca lan push vi ban xem truoc: o "Bai viet" van tro tep .md.
+            preview_errors = [f"khong dung duoc ban xem truoc: {str(exc)[:200]}"]
+
     counts = {"VERIFIED": 0, "PARTIAL": 0, "GAP": 0}
     for r in ledger:
         key = (r.get("status") or "").strip().upper()
@@ -835,6 +853,10 @@ def cmd_push(workdir: str, cfg: dict, force_bump: bool) -> int:
                        ("article", article_url)):
         if url:
             print(f"  {label:<12} : {url}")
+    if state.get("preview_token") and not preview_errors:
+        print("  ảnh         : ô 'Bài viết' mở bản xem trước có ảnh")
+    for err in preview_errors:
+        print(f"  [CẢNH BÁO] ảnh: {err}")
     print(f"\nBase: {cfg.get('base_url', '')}")
     return 0
 
