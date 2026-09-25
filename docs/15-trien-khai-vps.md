@@ -46,7 +46,8 @@ Nhẹ. Đây là công cụ xử lý văn bản, không phải dịch vụ web.
 | Python | **3.10 trở lên** | **Không cần `pip install` gì cả** — toàn bộ dùng thư viện chuẩn |
 | Node.js | 18 LTS trở lên | Chỉ để chạy `@larksuite/cli` |
 | Locale | `C.UTF-8` hoặc `vi_VN.UTF-8` | **Bắt buộc.** Locale POSIX làm script vỡ khi in tiếng Việt |
-| Mạng ra | HTTPS tới `larksuite.com`, `muaban.net` | Không cần mở cổng vào |
+| Mạng ra | HTTPS tới `larksuite.com`, `muaban.net` | Chiều ra cần 443 |
+| Mạng vào | Chỉ port 22 (SSH), mở cho mọi IP | Người vận hành làm việc cả ở nhà. Bù lại: chỉ đăng nhập bằng SSH key, tắt mật khẩu, tắt root, bật `fail2ban` |
 
 Không có cơ sở dữ liệu, không có web server, không có tiến trình thường trú. Mọi trạng thái nằm
 trong file dưới thư mục dự án.
