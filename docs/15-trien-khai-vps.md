@@ -54,29 +54,7 @@ sudo usermod -aG sudo contentseo      # sudo trong luc cai dat
 
 ## 4. SSH
 
-Cấu hình SSH **theo chuẩn thông thường của công ty**, kể cả giới hạn IP văn phòng nếu policy yêu cầu. Người vận hành chỉ cần vào server khi cài đặt và bảo trì, và làm việc đó ở văn phòng. Việc hằng ngày (duyệt bài trên Lark Base) không cần SSH nên làm ở đâu cũng được.
-
-**Khoá SSH:** đặt các public key dưới đây vào `/home/contentseo/.ssh/authorized_keys`, mỗi máy một
-dòng, chép **nguyên dòng**:
-
-| Máy | Public key |
-|---|---|
-| Laptop của Khá | `ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEhdHf+uzVXZ5HjmVC/QZYNF1mRACYUQW/EWLqfmi6xT lemin@Kha` |
-
-Dấu vân tay để đối chiếu sau khi đặt khoá (`ssh-keygen -lf authorized_keys`):
-`SHA256:WfbPGAeJh38SViPaTHsZERtXRfeEg5GOYYdbZgvuPn4`
-
-Lệnh đặt khoá:
-
-```bash
-sudo mkdir -p /home/contentseo/.ssh
-sudo nano /home/contentseo/.ssh/authorized_keys      # dan cac dong public key
-sudo chown -R contentseo:contentseo /home/contentseo/.ssh
-sudo chmod 700 /home/contentseo/.ssh
-sudo chmod 600 /home/contentseo/.ssh/authorized_keys
-```
-
-Về sau người vận hành tự thêm và gỡ khoá trong file này, không cần IT làm lại.
+Cần **SSH access** vào VPS. IT hướng dẫn cách vào theo chuẩn của công ty.
 
 ## 5. Port
 
@@ -110,5 +88,4 @@ và đăng nhập Claude do team nội dung tự cấu hình sau khi nhận máy
 
 ## 8. Bàn giao
 
-Gửi lại cho người yêu cầu: **IP của VPS** và tên user **`contentseo`**. Người yêu cầu sẽ thử
-`ssh contentseo@<ip>` từ máy của mình để xác nhận vào được.
+Gửi lại cho người yêu cầu **IP của VPS** và **cách SSH vào**.
