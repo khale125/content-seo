@@ -38,8 +38,10 @@ $node = Get-Command node -ErrorAction SilentlyContinue
 if ($null -ne $node) {
     $nv = & node --version
     Write-Host "[OK] node $nv"
-    $lark = Get-Command lark -ErrorAction SilentlyContinue
-    if ($null -ne $lark) {
+    # Do bang chinh ham cua du an: cai bang pnpm thi `lark` khong nam tren PATH
+    # nhung du an van goi duoc qua node + run.js.
+    & $py -c "import sys; sys.path.insert(0,'scripts/lark'); import lark_cli; sys.exit(0 if lark_cli._discover_cli() else 1)" 2>$null
+    if ($LASTEXITCODE -eq 0) {
         Write-Host "[OK] @larksuite/cli da cai"
     } else {
         Write-Host "[CANH BAO] Chua co @larksuite/cli. Phan dong bo Lark se khong chay."

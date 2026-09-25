@@ -62,18 +62,54 @@ class WpError(RuntimeError):
 
 # --------------------------------------------------------------- dang nhap
 
+def _read_dotenv() -> dict:
+    """Doc .env o goc du an. Khong ghi vao os.environ, de secret khong lan sang
+    tien trinh con — `wp_draft` co goi `run_qa.py` va `lark_sync.py` bang subprocess.
+
+    Ly do ham nay ton tai: du an ship `.env.example` va `install.sh` tao `.env`,
+    nen nguoi cai dat dien mat khau vao do roi tuong la xong. Truoc day khong mot
+    script nao doc file ay, va loi bao ra lai la "chua co thong tin dang nhap" —
+    dung kieu bay ma nguoi moi mat ca buoi moi hieu.
+    """
+    path = os.path.join(ROOT, ".env")
+    if not os.path.isfile(path):
+        return {}
+    out = {}
+    try:
+        with open(path, encoding="utf-8") as fh:
+            for line in fh:
+                line = line.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                key, _, val = line.partition("=")
+                val = val.strip().strip('"').strip("'")
+                if val:
+                    out[key.strip()] = val
+    except OSError:
+        return {}
+    return out
+
+
 def load_credentials() -> tuple[str, str]:
     user = os.environ.get("MBWP_USER", "").strip()
     pw = os.environ.get("MBWP_APP_PASSWORD", "").strip()
     if user and pw:
         return user, pw
+
+    dotenv = _read_dotenv()
+    user = user or dotenv.get("MBWP_USER", "").strip()
+    pw = pw or dotenv.get("MBWP_APP_PASSWORD", "").strip()
+    if user and pw:
+        return user, pw
+
     path = os.environ.get("MBWP_CREDENTIALS") or CRED_DEFAULT
     if not os.path.isfile(path):
         raise WpError(
-            "Chua co thong tin dang nhap WordPress.\n"
-            f"  Tao file {path} voi noi dung:\n"
-            '  {"user": "<tai khoan wp>", "app_password": "<mat khau ung dung>"}\n'
-            "  Hoac dat bien moi truong MBWP_USER va MBWP_APP_PASSWORD.")
+            "Chua co thong tin dang nhap WordPress. Chon mot trong ba cach:\n"
+            "  1. Dien MBWP_USER va MBWP_APP_PASSWORD vao file .env o goc du an\n"
+            "  2. Dat hai bien moi truong do truc tiep\n"
+            f"  3. Tao file {path} voi noi dung:\n"
+            '     {"user": "<tai khoan wp>", "app_password": "<mat khau ung dung>"}')
     try:
         with open(path, encoding="utf-8") as fh:
             data = json.load(fh)

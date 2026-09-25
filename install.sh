@@ -43,10 +43,12 @@ else
     echo "[OK] Da tao .env tu .env.example — hay dien MBWP_USER va MBWP_APP_PASSWORD"
 fi
 
-# Node + Lark CLI: canh bao thoi, vi bo kiem chay duoc ma khong can chung
+# Node + Lark CLI: canh bao thoi, vi bo kiem chay duoc ma khong can chung.
+# Do bang chinh ham cua du an chu khong bang `command -v lark`: cai bang pnpm thi
+# `lark` khong nam tren PATH nhung du an van goi duoc qua node + run.js.
 if command -v node >/dev/null 2>&1; then
     echo "[OK] node $(node --version)"
-    if command -v lark >/dev/null 2>&1; then
+    if "$PY" -c "import sys; sys.path.insert(0,'scripts/lark'); import lark_cli; sys.exit(0 if lark_cli._discover_cli() else 1)" 2>/dev/null; then
         echo "[OK] @larksuite/cli da cai"
     else
         echo "[CANH BAO] Chua co @larksuite/cli. Phan dong bo Lark se khong chay."

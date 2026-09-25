@@ -108,11 +108,18 @@ Sao `.env.example` thành `.env`, điền giá trị, rồi `chmod 600 .env`. Fi
 | `LARK_NODE` | Tùy chọn | Đường dẫn `node` nếu không nằm trong `PATH` |
 | `LARK_CLI_ENTRY` | Tùy chọn | Đường dẫn `.../@larksuite/cli/scripts/run.js` nếu tự dò không ra |
 
-Cách khác cho WordPress: đặt file `~/.muaban-wp.json` với `chmod 600`:
+`wp_draft.py` tìm thông tin đăng nhập WordPress theo **đúng ba nguồn, theo thứ tự này**:
+
+1. Biến môi trường `MBWP_USER` + `MBWP_APP_PASSWORD` — dùng cho cron và CI, nơi không nên có file
+2. File `.env` ở gốc dự án — dùng cho máy người thật, tiện nhất
+3. File `~/.muaban-wp.json` với `chmod 600`:
 
 ```json
 { "site": "https://muaban.net/blog", "user": "<tên đăng nhập>", "app_password": "<app password>" }
 ```
+
+Nguồn nào có trước thì thắng. `.env` **không** được nạp vào `os.environ`, nên mật khẩu không lan sang
+tiến trình con — và `wp_draft.py` có gọi `run_qa.py` cùng `lark_sync.py` bằng subprocess.
 
 Ba điều về application password, xin đọc hết: nó **bỏ qua xác thực hai lớp**, nó **thu hồi độc lập**
 với mật khẩu chính (thu hồi một cái không ảnh hưởng cái kia), và nó chỉ hiện **một lần** lúc tạo.

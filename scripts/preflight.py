@@ -178,12 +178,16 @@ def check_lark() -> None:
 
 def check_wp() -> None:
     print("--- 5. WordPress ---")
-    env_user = os.environ.get("MBWP_USER")
-    env_pass = os.environ.get("MBWP_APP_PASSWORD")
-    cred_file = os.path.join(os.path.expanduser("~"), ".muaban-wp.json")
-    has = bool(env_user and env_pass) or os.path.isfile(cred_file)
-    check("thong tin dang nhap WordPress", has,
-          note="" if has else "dat MBWP_USER + MBWP_APP_PASSWORD, hoac tao ~/.muaban-wp.json")
+    # Hoi chinh wp_draft chu khong tu doan: no biet ca ba nguon (bien moi truong,
+    # .env o goc du an, ~/.muaban-wp.json) va thu tu uu tien giua chung.
+    sys.path.insert(0, os.path.join(ROOT, "scripts", "wp"))
+    try:
+        import wp_draft
+        user, _ = wp_draft.load_credentials()
+        has, why = True, f"tai khoan {user}"
+    except Exception as exc:
+        has, why = False, str(exc).splitlines()[0][:120]
+    check("thong tin dang nhap WordPress", has, note=why)
     if not has:
         return
     code, out = run([sys.executable, os.path.join("scripts", "wp", "wp_draft.py"), "--check"])

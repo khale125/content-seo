@@ -82,6 +82,9 @@ lark auth login
 python3 scripts/preflight.py --all      # phai 23/23
 ```
 
+`wp_draft.py` đọc `.env` ở gốc dự án, nên điền vào đó là đủ — không cần `export` gì thêm. Thứ tự ưu
+tiên là biến môi trường, rồi `.env`, rồi `~/.muaban-wp.json`; nguồn nào có trước thì thắng.
+
 Rồi mở **Claude Code** ngay trong thư mục đó. Agent đọc `CLAUDE.md` và các skill trong
 `.claude/skills/` là bắt đầu làm việc được.
 
